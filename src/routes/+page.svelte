@@ -1,2 +1,19 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+  import { onMount } from "svelte";
+  import Unsupported from "../lib/components/unsupported.svelte";
+  import App from "$lib/components/app.svelte";
+
+  let supported: boolean | "unknown" = "unknown";
+
+  onMount(() => {
+    supported = navigator.serial != null;
+  });
+</script>
+
+{#if supported === "unknown"}
+  <span>Checking browser compatibility</span>
+{:else if supported}
+  <App />
+{:else}
+  <Unsupported />
+{/if}
