@@ -17,9 +17,14 @@
   title="Connection Options"
   class="col-start-[col-1-start] col-end-[col-2-end]"
 >
-  Configurator is disconnected
+  <p>Welcome to LD2410 Configurator! Here are some steps to get started:</p>
+  <ol class="list-decimal list-inside">
+    <li>Connect your LD2410 to a serial adapter such as a CP2102</li>
+    <li>Plug your serial adapter into your computer</li>
+    <li>Click the button below to connect!</li>
+  </ol>
 
-  <form>
+  <form class="mt-4">
     <div>
       <input
         id="connection-form-advanced"
