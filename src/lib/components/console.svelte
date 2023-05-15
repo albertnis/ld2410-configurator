@@ -41,7 +41,10 @@
   });
 </script>
 
-<Panel title="Serial Console">
+<Panel
+  title="Serial Console"
+  class="col-start-[col-1-start] col-end-[col-2-end]"
+>
   <label>
     <input type="checkbox" bind:checked={scrollToBottom} />
     Keep scrolled to bottom

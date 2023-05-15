@@ -150,7 +150,10 @@
   };
 </script>
 
-<Panel title="Configuration Parameters">
+<Panel
+  title="Configuration Parameters"
+  class="col-start-[col-2-start] col-end-[col-2-end]"
+>
   <button
     class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
     on:click={readAllParameters}>Reload all</button

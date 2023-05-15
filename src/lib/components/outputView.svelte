@@ -24,7 +24,7 @@
   });
 </script>
 
-<Panel title="Output">
+<Panel title="Output" class="col-start-[col-1-start] col-end-[col-1-end]">
   {#if state.type === "RADAR_DATA_OUTPUT"}
     <dl>
       <dt>Detection state</dt>

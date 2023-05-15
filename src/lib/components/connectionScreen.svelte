@@ -13,7 +13,10 @@
   };
 </script>
 
-<Panel title="Connection Options">
+<Panel
+  title="Connection Options"
+  class="col-start-[col-1-start] col-end-[col-1-end]"
+>
   Configurator is disconnected
 
   <form>
