@@ -7,6 +7,8 @@ export const readFirmwareVersionCommandWord = 0xa0;
 export const getMacAddressCommandWord = 0xa5;
 export const enableConfigurationCommandWord = 0xff;
 export const endConfigurationCommandWord = 0xfe;
+export const readParameterCommandWord = 0x61;
+export const maximumDistanceGateCommandWord = 0x60;
 
 export const radarDataOutputPayloadHeader = [0xf4, 0xf3, 0xf2, 0xf1];
 export const radarDataOutputPayloadTrailer = [0xf8, 0xf7, 0xf6, 0xf5];

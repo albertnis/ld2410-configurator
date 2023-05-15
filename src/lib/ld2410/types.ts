@@ -56,6 +56,71 @@ export type GetMacAddressPayloadAck = {
   macAddress: string;
 };
 
+export type ReadParamterCommandPayload = {
+  type: "READ_PARAMETER_COMMAND";
+};
+
+export type ReadParamterCommandPayloadAck = {
+  type: "READ_PARAMETER_COMMAND_ACK";
+  status: "SUCCESS" | "FAILURE";
+  maximumDistanceGate: number;
+  maximumMovingDistanceGate: number;
+  maximumStaticDistanceGate: number;
+  sensitivity: Sensitivity;
+  timeout: number;
+};
+
+export type Sensitivity = {
+  0: {
+    motion: number;
+    rest: number;
+  };
+  1: {
+    motion: number;
+    rest: number;
+  };
+  2: {
+    motion: number;
+    rest: number;
+  };
+  3: {
+    motion: number;
+    rest: number;
+  };
+  4: {
+    motion: number;
+    rest: number;
+  };
+  5: {
+    motion: number;
+    rest: number;
+  };
+  6: {
+    motion: number;
+    rest: number;
+  };
+  7: {
+    motion: number;
+    rest: number;
+  };
+  8: {
+    motion: number;
+    rest: number;
+  };
+};
+
+export type MaximumDistanceGateCommand = {
+  type: "MAXIMUM_DISTANCE_GATE";
+  maximumMovingDistanceGate: number;
+  maximumStaticDistanceGate: number;
+  timeout: number;
+};
+
+export type MaximumDistanceGateCommandAck = {
+  type: "MAXIMUM_DISTANCE_GATE_ACK";
+  status: "SUCCESS" | "FAILURE";
+};
+
 export type UnknownPayload = {
   type: "UNKNOWN";
 };
@@ -64,7 +129,9 @@ export type LD2410WritePayload =
   | EnableConfigurationCommandPayload
   | EndConfigurationCommandPayload
   | ReadFirmwareVerionCommandPayload
-  | GetMacAddressPayload;
+  | GetMacAddressPayload
+  | ReadParamterCommandPayload
+  | MaximumDistanceGateCommand;
 
 export type LD2410ReadPayload =
   | RadarDataOutputBasicPayload
@@ -72,6 +139,8 @@ export type LD2410ReadPayload =
   | EndConfigurationCommandAckPayload
   | ReadFirmwareVerionCommandAckPayload
   | GetMacAddressPayloadAck
+  | ReadParamterCommandPayloadAck
+  | MaximumDistanceGateCommandAck
   | UnknownPayload;
 
 export type LD2410Payload = LD2410WritePayload | LD2410ReadPayload;
