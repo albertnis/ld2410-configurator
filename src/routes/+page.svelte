@@ -3,6 +3,7 @@
   import Unsupported from "../lib/components/unsupported.svelte";
   import App from "$lib/components/app.svelte";
   import Panel from "$lib/components/panel.svelte";
+  import Footer from "$lib/components/footer.svelte";
 
   let supported: boolean | "unknown" = "unknown";
 
@@ -27,3 +28,5 @@
 {:else}
   <Unsupported />
 {/if}
+
+<div class="col-start-[col-1-start] col-end-[col-2-end]"><Footer /></div>
