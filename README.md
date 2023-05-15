@@ -1,6 +1,6 @@
 # LD2410 configurator
 
-Display radar data and configure your LD2410 motion sensor, right from the browser!
+Display radar data and configure your LD2410 motion sensor, right from the browser! The aim of this project is to improve on the hard-to-use Windows-only tooling provided by HiLink.
 
 Features:
 
