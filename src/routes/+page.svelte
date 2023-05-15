@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import Unsupported from "../lib/components/unsupported.svelte";
   import App from "$lib/components/app.svelte";
+  import Panel from "$lib/components/panel.svelte";
 
   let supported: boolean | "unknown" = "unknown";
 
@@ -10,10 +11,12 @@
   });
 </script>
 
-<h1>LD2410 Configurator</h1>
+<h1 class="text-3xl font-black">LD2410 Configurator</h1>
 
 {#if supported === "unknown"}
-  <span>Checking browser compatibility</span>
+  <Panel title="Browser Compatibility">
+    <span>Checking browser compatibility</span>
+  </Panel>
 {:else if supported}
   <App />
 {:else}

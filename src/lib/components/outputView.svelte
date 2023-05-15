@@ -6,6 +6,7 @@
   } from "$lib/ld2410/types";
   import type { SerialStore } from "$lib/stores/serialRead";
   import { onMount } from "svelte";
+  import Panel from "./panel.svelte";
 
   export let serialStore: SerialStore;
 
@@ -23,22 +24,22 @@
   });
 </script>
 
-<h2>Output</h2>
+<Panel title="Output">
+  {#if state.type === "RADAR_DATA_OUTPUT"}
+    <dl>
+      <dt>Detection state</dt>
+      <dd>{state.targetStatus}</dd>
 
-{#if state.type === "RADAR_DATA_OUTPUT"}
-  <dl>
-    <dt>Detection state</dt>
-    <dd>{state.targetStatus}</dd>
+      <dt>Detection distance</dt>
+      <dd>{state.detectionDistanceCm}cm</dd>
 
-    <dt>Detection distance</dt>
-    <dd>{state.detectionDistanceCm}cm</dd>
+      <dt>Movement target distance</dt>
+      <dd>{state.movementTargetDistanceCm}cm</dd>
 
-    <dt>Movement target distance</dt>
-    <dd>{state.movementTargetDistanceCm}cm</dd>
-
-    <dt>Stationary target distance</dt>
-    <dd>{state.stationaryTargetDistanceCm}cm</dd>
-  </dl>
-{:else}
-  Unknown state
-{/if}
+      <dt>Stationary target distance</dt>
+      <dd>{state.stationaryTargetDistanceCm}cm</dd>
+    </dl>
+  {:else}
+    Unknown state
+  {/if}
+</Panel>

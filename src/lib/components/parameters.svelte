@@ -4,6 +4,7 @@
   import type { Sensitivity } from "$lib/ld2410/types";
   import type { SerialStore } from "$lib/stores/serialRead";
   import { onMount } from "svelte";
+  import Panel from "./panel.svelte";
 
   export let serialStore: SerialStore;
   let formElement: HTMLFormElement;
@@ -149,294 +150,297 @@
   };
 </script>
 
-<h2>Configuration Parameters</h2>
+<Panel title="Configuration Parameters">
+  <button
+    class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
+    on:click={readAllParameters}>Reload all</button
+  >
 
-<button on:click={readAllParameters}>Reload all</button>
+  <h3>Diagnostics</h3>
 
-<h3>Diagnostics</h3>
+  <dl>
+    <dt>Firmware version</dt>
+    <dd>{firmwareVerion}</dd>
 
-<dl>
-  <dt>Firmware version</dt>
-  <dd>{firmwareVerion}</dd>
+    <dt>Protocol version</dt>
+    <dd>{protocolVersion}</dd>
 
-  <dt>Protocol version</dt>
-  <dd>{protocolVersion}</dd>
+    <dt>Buffer size</dt>
+    <dd>{bufferSize}</dd>
 
-  <dt>Buffer size</dt>
-  <dd>{bufferSize}</dd>
+    <dt>Mac address</dt>
+    <dd>{macAddress}</dd>
+  </dl>
 
-  <dt>Mac address</dt>
-  <dd>{macAddress}</dd>
-</dl>
+  <h3>Configuration</h3>
 
-<h3>Configuration</h3>
+  <form bind:this={formElement}>
+    <label>
+      Timeout period:
+      <input
+        type="number"
+        min="0"
+        max="65535"
+        step="1"
+        bind:value={timeout}
+        on:change={onTimeoutChange}
+        required
+      />
+      s
+    </label>
 
-<form bind:this={formElement}>
-  <label>
-    Timeout period:
-    <input
-      type="number"
-      min="0"
-      max="65535"
-      step="1"
-      bind:value={timeout}
-      on:change={onTimeoutChange}
-      required
-    />
-    s
-  </label>
+    <label>
+      Maximum moving distance gate:
+      <input
+        type="number"
+        min="1"
+        max="8"
+        step="1"
+        bind:value={maximumMovingDistanceGate}
+        on:change={onTimeoutChange}
+        required
+      />
+    </label>
 
-  <label>
-    Maximum moving distance gate:
-    <input
-      type="number"
-      min="1"
-      max="8"
-      step="1"
-      bind:value={maximumMovingDistanceGate}
-      on:change={onTimeoutChange}
-      required
-    />
-  </label>
+    <label>
+      Maximum static distance gate:
+      <input
+        type="number"
+        min="1"
+        max="8"
+        step="1"
+        bind:value={maximumStaticDistanceGate}
+        on:change={onTimeoutChange}
+        required
+      />
+    </label>
 
-  <label>
-    Maximum static distance gate:
-    <input
-      type="number"
-      min="1"
-      max="8"
-      step="1"
-      bind:value={maximumStaticDistanceGate}
-      on:change={onTimeoutChange}
-      required
-    />
-  </label>
-
-  {#if sensitivity != null}
-    <div>
-      <h4>Gate 0</h4>
-      <label>
-        Motion sensitivity ({sensitivity[0].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[0].motion}
-          on:change={onGateMotionSensitivityChange(0)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[0].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          disabled
-          bind:value={sensitivity[0].rest}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 1</h4>
-      <label>
-        Motion sensitivity ({sensitivity[1].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[1].motion}
-          on:change={onGateMotionSensitivityChange(1)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[1].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          disabled
-          bind:value={sensitivity[1].rest}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 2</h4>
-      <label>
-        Motion sensitivity ({sensitivity[2].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[2].motion}
-          on:change={onGateMotionSensitivityChange(2)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[2].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[2].rest}
-          on:change={onGateStaticSensitivityChange(2)}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 3</h4>
-      <label>
-        Motion sensitivity ({sensitivity[3].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[3].motion}
-          on:change={onGateMotionSensitivityChange(3)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[3].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[3].rest}
-          on:change={onGateStaticSensitivityChange(3)}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 4</h4>
-      <label>
-        Motion sensitivity ({sensitivity[4].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[4].motion}
-          on:change={onGateMotionSensitivityChange(4)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[4].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[4].rest}
-          on:change={onGateStaticSensitivityChange(4)}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 5</h4>
-      <label>
-        Motion sensitivity ({sensitivity[5].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[5].motion}
-          on:change={onGateMotionSensitivityChange(5)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[5].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[5].rest}
-          on:change={onGateStaticSensitivityChange(5)}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 6</h4>
-      <label>
-        Motion sensitivity ({sensitivity[6].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[6].motion}
-          on:change={onGateMotionSensitivityChange(6)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[6].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[6].rest}
-          on:change={onGateStaticSensitivityChange(6)}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 7</h4>
-      <label>
-        Motion sensitivity ({sensitivity[7].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[7].motion}
-          on:change={onGateMotionSensitivityChange(7)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[7].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[7].rest}
-          on:change={onGateStaticSensitivityChange(7)}
-        />
-      </label>
-    </div>
-    <div>
-      <h4>Gate 8</h4>
-      <label>
-        Motion sensitivity ({sensitivity[8].motion})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[8].motion}
-          on:change={onGateMotionSensitivityChange(8)}
-        />
-      </label>
-      <label>
-        Rest sensitivity ({sensitivity[8].rest})
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          bind:value={sensitivity[8].rest}
-          on:change={onGateStaticSensitivityChange(8)}
-        />
-      </label>
-    </div>
-  {/if}
-</form>
+    {#if sensitivity != null}
+      <div>
+        <h4>Gate 0</h4>
+        <label>
+          Motion sensitivity ({sensitivity[0].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[0].motion}
+            on:change={onGateMotionSensitivityChange(0)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[0].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            disabled
+            bind:value={sensitivity[0].rest}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 1</h4>
+        <label>
+          Motion sensitivity ({sensitivity[1].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[1].motion}
+            on:change={onGateMotionSensitivityChange(1)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[1].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            disabled
+            bind:value={sensitivity[1].rest}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 2</h4>
+        <label>
+          Motion sensitivity ({sensitivity[2].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[2].motion}
+            on:change={onGateMotionSensitivityChange(2)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[2].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[2].rest}
+            on:change={onGateStaticSensitivityChange(2)}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 3</h4>
+        <label>
+          Motion sensitivity ({sensitivity[3].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[3].motion}
+            on:change={onGateMotionSensitivityChange(3)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[3].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[3].rest}
+            on:change={onGateStaticSensitivityChange(3)}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 4</h4>
+        <label>
+          Motion sensitivity ({sensitivity[4].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[4].motion}
+            on:change={onGateMotionSensitivityChange(4)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[4].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[4].rest}
+            on:change={onGateStaticSensitivityChange(4)}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 5</h4>
+        <label>
+          Motion sensitivity ({sensitivity[5].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[5].motion}
+            on:change={onGateMotionSensitivityChange(5)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[5].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[5].rest}
+            on:change={onGateStaticSensitivityChange(5)}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 6</h4>
+        <label>
+          Motion sensitivity ({sensitivity[6].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[6].motion}
+            on:change={onGateMotionSensitivityChange(6)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[6].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[6].rest}
+            on:change={onGateStaticSensitivityChange(6)}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 7</h4>
+        <label>
+          Motion sensitivity ({sensitivity[7].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[7].motion}
+            on:change={onGateMotionSensitivityChange(7)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[7].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[7].rest}
+            on:change={onGateStaticSensitivityChange(7)}
+          />
+        </label>
+      </div>
+      <div>
+        <h4>Gate 8</h4>
+        <label>
+          Motion sensitivity ({sensitivity[8].motion})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[8].motion}
+            on:change={onGateMotionSensitivityChange(8)}
+          />
+        </label>
+        <label>
+          Rest sensitivity ({sensitivity[8].rest})
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            bind:value={sensitivity[8].rest}
+            on:change={onGateStaticSensitivityChange(8)}
+          />
+        </label>
+      </div>
+    {/if}
+  </form>
+</Panel>

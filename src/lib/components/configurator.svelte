@@ -7,7 +7,10 @@
   export let serialStore: SerialStore;
 </script>
 
-<button on:click={() => serialStore.disconnect()}>Disconnect</button>
+<button
+  class="bg-red-600 border rounded-sm border-red-500 hover:bg-red-500 active:bg-red-700 px-2 py-1"
+  on:click={() => serialStore.disconnect()}>Disconnect</button
+>
 
 <OutputView {serialStore} />
 
