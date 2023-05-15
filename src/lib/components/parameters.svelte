@@ -46,6 +46,48 @@
     );
   };
 
+  const onGateMotionSensitivityChange =
+    (gate: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) => (event: Event) => {
+      if (sensitivity == null) {
+        throw new Error("Sensitivity was not defined so could not be updated");
+      }
+
+      const target = event.target as HTMLInputElement;
+      const motionSensitivity = parseInt(target.value);
+
+      enterConfigurationMode();
+      serialStore.write(
+        encodePayloadToByteArray({
+          type: "RANGE_GATE_SENSITIVITY",
+          gate,
+          motionSensitivity,
+          staticSensitivity: sensitivity[gate].rest,
+        })
+      );
+      exitConfigurationMode();
+    };
+
+  const onGateStaticSensitivityChange =
+    (gate: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) => (event: Event) => {
+      if (sensitivity == null) {
+        throw new Error("Sensitivity was not defined so could not be updated");
+      }
+
+      const target = event.target as HTMLInputElement;
+      const staticSensitivity = parseInt(target.value);
+
+      enterConfigurationMode();
+      serialStore.write(
+        encodePayloadToByteArray({
+          type: "RANGE_GATE_SENSITIVITY",
+          gate,
+          motionSensitivity: sensitivity[gate].motion,
+          staticSensitivity,
+        })
+      );
+      exitConfigurationMode();
+    };
+
   const readAllParameters = () => {
     enterConfigurationMode();
     getFirmwareVersion();
@@ -181,6 +223,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[0].motion}
+          on:change={onGateMotionSensitivityChange(0)}
         />
       </label>
       <label>
@@ -205,6 +248,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[1].motion}
+          on:change={onGateMotionSensitivityChange(1)}
         />
       </label>
       <label>
@@ -229,6 +273,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[2].motion}
+          on:change={onGateMotionSensitivityChange(2)}
         />
       </label>
       <label>
@@ -239,6 +284,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[2].rest}
+          on:change={onGateStaticSensitivityChange(2)}
         />
       </label>
     </div>
@@ -252,6 +298,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[3].motion}
+          on:change={onGateMotionSensitivityChange(3)}
         />
       </label>
       <label>
@@ -262,6 +309,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[3].rest}
+          on:change={onGateStaticSensitivityChange(3)}
         />
       </label>
     </div>
@@ -275,6 +323,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[4].motion}
+          on:change={onGateMotionSensitivityChange(4)}
         />
       </label>
       <label>
@@ -285,6 +334,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[4].rest}
+          on:change={onGateStaticSensitivityChange(4)}
         />
       </label>
     </div>
@@ -298,6 +348,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[5].motion}
+          on:change={onGateMotionSensitivityChange(5)}
         />
       </label>
       <label>
@@ -308,6 +359,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[5].rest}
+          on:change={onGateStaticSensitivityChange(5)}
         />
       </label>
     </div>
@@ -321,6 +373,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[6].motion}
+          on:change={onGateMotionSensitivityChange(6)}
         />
       </label>
       <label>
@@ -331,6 +384,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[6].rest}
+          on:change={onGateStaticSensitivityChange(6)}
         />
       </label>
     </div>
@@ -344,6 +398,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[7].motion}
+          on:change={onGateMotionSensitivityChange(7)}
         />
       </label>
       <label>
@@ -354,6 +409,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[7].rest}
+          on:change={onGateStaticSensitivityChange(7)}
         />
       </label>
     </div>
@@ -367,6 +423,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[8].motion}
+          on:change={onGateMotionSensitivityChange(8)}
         />
       </label>
       <label>
@@ -377,6 +434,7 @@
           max="100"
           step="1"
           bind:value={sensitivity[8].rest}
+          on:change={onGateStaticSensitivityChange(8)}
         />
       </label>
     </div>

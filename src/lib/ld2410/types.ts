@@ -109,15 +109,27 @@ export type Sensitivity = {
   };
 };
 
-export type MaximumDistanceGateCommand = {
+export type MaximumDistanceGateCommandPayload = {
   type: "MAXIMUM_DISTANCE_GATE";
   maximumMovingDistanceGate: number;
   maximumStaticDistanceGate: number;
   timeout: number;
 };
 
-export type MaximumDistanceGateCommandAck = {
+export type MaximumDistanceGateCommandAckPayload = {
   type: "MAXIMUM_DISTANCE_GATE_ACK";
+  status: "SUCCESS" | "FAILURE";
+};
+
+export type RangeGateSensitivityCommandPayload = {
+  type: "RANGE_GATE_SENSITIVITY";
+  gate: number | "ALL_GATES";
+  motionSensitivity: number;
+  staticSensitivity: number;
+};
+
+export type RangeGateSensitivityCommandAckPayload = {
+  type: "RANGE_GATE_SENSITIVITY_ACK";
   status: "SUCCESS" | "FAILURE";
 };
 
@@ -131,7 +143,8 @@ export type LD2410WritePayload =
   | ReadFirmwareVerionCommandPayload
   | GetMacAddressPayload
   | ReadParamterCommandPayload
-  | MaximumDistanceGateCommand;
+  | RangeGateSensitivityCommandPayload
+  | MaximumDistanceGateCommandPayload;
 
 export type LD2410ReadPayload =
   | RadarDataOutputBasicPayload
@@ -140,7 +153,8 @@ export type LD2410ReadPayload =
   | ReadFirmwareVerionCommandAckPayload
   | GetMacAddressPayloadAck
   | ReadParamterCommandPayloadAck
-  | MaximumDistanceGateCommandAck
+  | MaximumDistanceGateCommandAckPayload
+  | RangeGateSensitivityCommandAckPayload
   | UnknownPayload;
 
 export type LD2410Payload = LD2410WritePayload | LD2410ReadPayload;
