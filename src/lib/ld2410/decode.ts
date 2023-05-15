@@ -62,8 +62,8 @@ export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
       return {
         type: "ENABLE_CONFIGURATION_COMMAND_ACK",
         status: vals[8] + vals[9] === 0 ? "SUCCESS" : "FAILURE",
-        protocolVersion: (vals[11] << 2) + vals[10],
-        bufferSize: (vals[13] << 2) + vals[12],
+        protocolVersion: (vals[11] << 8) + vals[10],
+        bufferSize: (vals[13] << 8) + vals[12],
       };
     }
 

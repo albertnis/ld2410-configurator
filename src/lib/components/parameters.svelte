@@ -8,10 +8,10 @@
   export let serialStore: SerialStore;
   let formElement: HTMLFormElement;
 
-  let configurationMode: boolean | undefined = undefined;
-
   let firmwareVerion: string | undefined = undefined;
   let macAddress: string | undefined = undefined;
+  let protocolVersion: number | undefined = undefined;
+  let bufferSize: number | undefined = undefined;
 
   let sensitivity: Sensitivity | undefined = undefined;
   let timeout: number | undefined = undefined;
@@ -46,6 +46,14 @@
     );
   };
 
+  const readAllParameters = () => {
+    enterConfigurationMode();
+    getFirmwareVersion();
+    getMacAddress();
+    readParameters();
+    exitConfigurationMode();
+  };
+
   onMount(() => {
     serialStore.subscribe((e) => {
       if (e.eventType === "READ") {
@@ -55,24 +63,20 @@
         } else if (payload.type === "GET_MAC_ADDRESS_ACK") {
           macAddress = payload.macAddress;
         } else if (payload.type === "ENABLE_CONFIGURATION_COMMAND_ACK") {
-          configurationMode = true;
-        } else if (payload.type === "END_CONFIGURATION_COMMAND_ACK") {
-          configurationMode = false;
+          ({ protocolVersion, bufferSize } = payload);
         } else if (payload.type === "READ_PARAMETER_COMMAND_ACK") {
           console.log(payload);
-          sensitivity = payload.sensitivity;
-          timeout = payload.timeout;
-          maximumMovingDistanceGate = payload.maximumMovingDistanceGate;
-          maximumStaticDistanceGate = payload.maximumStaticDistanceGate;
+          ({
+            sensitivity,
+            timeout,
+            maximumMovingDistanceGate,
+            maximumStaticDistanceGate,
+          } = payload);
         }
       }
     });
 
-    enterConfigurationMode();
-    getFirmwareVersion();
-    getMacAddress();
-    readParameters();
-    exitConfigurationMode();
+    readAllParameters();
   });
 
   const onTimeoutChange = (e: Event) => {
@@ -105,13 +109,25 @@
 
 <h2>Configuration Parameters</h2>
 
+<button on:click={readAllParameters}>Reload all</button>
+
+<h3>Diagnostics</h3>
+
 <dl>
   <dt>Firmware version</dt>
   <dd>{firmwareVerion}</dd>
 
+  <dt>Protocol version</dt>
+  <dd>{protocolVersion}</dd>
+
+  <dt>Buffer size</dt>
+  <dd>{bufferSize}</dd>
+
   <dt>Mac address</dt>
   <dd>{macAddress}</dd>
 </dl>
+
+<h3>Configuration</h3>
 
 <form bind:this={formElement}>
   <label>
@@ -156,7 +172,7 @@
 
   {#if sensitivity != null}
     <div>
-      <h3>Gate 0</h3>
+      <h4>Gate 0</h4>
       <label>
         Motion sensitivity ({sensitivity[0].motion})
         <input
@@ -167,9 +183,20 @@
           bind:value={sensitivity[0].motion}
         />
       </label>
+      <label>
+        Rest sensitivity ({sensitivity[0].rest})
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          disabled
+          bind:value={sensitivity[0].rest}
+        />
+      </label>
     </div>
     <div>
-      <h3>Gate 1</h3>
+      <h4>Gate 1</h4>
       <label>
         Motion sensitivity ({sensitivity[1].motion})
         <input
@@ -180,9 +207,20 @@
           bind:value={sensitivity[1].motion}
         />
       </label>
+      <label>
+        Rest sensitivity ({sensitivity[1].rest})
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          disabled
+          bind:value={sensitivity[1].rest}
+        />
+      </label>
     </div>
     <div>
-      <h3>Gate 2</h3>
+      <h4>Gate 2</h4>
       <label>
         Motion sensitivity ({sensitivity[2].motion})
         <input
@@ -205,7 +243,7 @@
       </label>
     </div>
     <div>
-      <h3>Gate 3</h3>
+      <h4>Gate 3</h4>
       <label>
         Motion sensitivity ({sensitivity[3].motion})
         <input
@@ -228,7 +266,7 @@
       </label>
     </div>
     <div>
-      <h3>Gate 4</h3>
+      <h4>Gate 4</h4>
       <label>
         Motion sensitivity ({sensitivity[4].motion})
         <input
@@ -251,7 +289,7 @@
       </label>
     </div>
     <div>
-      <h3>Gate 5</h3>
+      <h4>Gate 5</h4>
       <label>
         Motion sensitivity ({sensitivity[5].motion})
         <input
@@ -274,7 +312,7 @@
       </label>
     </div>
     <div>
-      <h3>Gate 6</h3>
+      <h4>Gate 6</h4>
       <label>
         Motion sensitivity ({sensitivity[6].motion})
         <input
@@ -297,7 +335,7 @@
       </label>
     </div>
     <div>
-      <h3>Gate 7</h3>
+      <h4>Gate 7</h4>
       <label>
         Motion sensitivity ({sensitivity[7].motion})
         <input
@@ -320,7 +358,7 @@
       </label>
     </div>
     <div>
-      <h3>Gate 8</h3>
+      <h4>Gate 8</h4>
       <label>
         Motion sensitivity ({sensitivity[8].motion})
         <input

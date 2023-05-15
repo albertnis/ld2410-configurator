@@ -7,13 +7,7 @@
   export let serialStore: SerialStore;
 </script>
 
-<button
-  id="stop"
-  style="position: fixed; top: 0; right: 0"
-  on:click={() => serialStore.disconnect()}
->
-  Disconnect
-</button>
+<button on:click={() => serialStore.disconnect()}>Disconnect</button>
 
 <OutputView {serialStore} />
 
