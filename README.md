@@ -1,38 +1,35 @@
-# create-svelte
+# LD2410 configurator
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Display radar data and configure your LD2410 motion sensor, right from the browser!
 
-## Creating a project
+Features:
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Easy to use without any coding
+- Cross platform
+- Only software dependency is a supported browser
+- Compatible with LD2410B and LD2410C
+
+## Usage and compatibility
+
+LD2410 configurator will soon be hosted online and can be used from any browser that supports the [WebSerial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API) (Chrome, Edge or Opera as at time of writing). When the site is deployed, usage will look something like this:
+
+1. Plug your LD2410 into your computer via a serial-to-USB adapter such as CP2102.
+1. Browse to the site and follow the instructions.
+
+In the mean time you will need to clone, install and run it locally using the instructions below.
+
+## Develop
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm install
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
+## Build
 
 ```bash
 npm run build
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
