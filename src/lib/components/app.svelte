@@ -1,29 +1,22 @@
 <script lang="ts">
+  import {
+    createSerialReadStore,
+    type SerialStore,
+  } from "$lib/stores/serialRead";
   import Configurator from "./configurator.svelte";
   import ConnectionScreen from "./connectionScreen.svelte";
 
-  let port: SerialPort | null = null;
-
-  let readableStream: ReadableStream | null = null;
-  let writeableStream: WritableStream | null = null;
+  let serialReadStore: SerialStore | null = null;
 
   const openPort = async (baudRate: number) => {
-    port = await navigator.serial.requestPort();
-    await port.open({ baudRate, parity: "none", stopBits: 1 });
-    readableStream = port.readable;
-    writeableStream = port.writable;
-  };
-
-  const disconnect = async () => {
-    readableStream = null;
-    writeableStream = null;
-    await port?.close();
-    port = null;
+    const port = await navigator.serial.requestPort();
+    serialReadStore = createSerialReadStore(port, baudRate);
+    await serialReadStore.connect();
   };
 </script>
 
-{#if readableStream != null && writeableStream != null}
-  <Configurator {readableStream} {writeableStream} onDisconnect={disconnect} />
+{#if serialReadStore != null}
+  <Configurator serialStore={serialReadStore} />
 {:else}
   <ConnectionScreen {openPort} />
 {/if}
