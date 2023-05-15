@@ -2,10 +2,8 @@
   import "../app.css";
 </script>
 
-<div class="text-gray-50 bg-gray-950 font-sans h-full">
-  <div
-    class="gap-4 pt-4 mx-auto max-w-[1350px] grid grid-cols-layout-narrow md:grid-cols-layout-wide"
-  >
-    <slot />
-  </div>
+<div
+  class="gap-4 py-4 mx-auto max-w-[1350px] grid grid-cols-layout-narrow md:grid-cols-layout-wide"
+>
+  <slot />
 </div>
