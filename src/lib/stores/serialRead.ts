@@ -1,3 +1,9 @@
+import { everyEqual } from "$lib/array/everyEqual";
+import {
+  configurationPayloadTrailer,
+  radarDataOutputPayloadTrailer,
+} from "$lib/ld2410/constants";
+
 type ReadResult =
   | { value: Uint8Array; done: false }
   | { value: undefined; done: true };
@@ -40,6 +46,7 @@ interface Store {
 export type SerialStore = Store & {
   connect: () => void;
   disconnect: () => void;
+  write: (payload: Uint8Array) => void;
 };
 
 export const createSerialReadStore = (
@@ -48,15 +55,27 @@ export const createSerialReadStore = (
 ): SerialStore => {
   let stopping = false;
   const subs: SubscribeCallback[] = [];
+  const writeQueue: Uint8Array[] = [];
 
   const broadcastEvent = (e: SerialEvent) => subs.forEach((cb) => cb(e));
 
   const write = async (payload: Uint8Array) => {
-    if (port.writable != null) {
+    writeQueue.push(payload);
+  };
+
+  const writeForever = async () => {
+    while (!stopping && port.writable != null) {
       const writer = port.writable.getWriter();
-      writer.write(payload);
-      writer.releaseLock();
-      broadcastEvent({ eventType: "WRITE", payload });
+      try {
+        while (!stopping && writeQueue.length > 0) {
+          const payload = writeQueue.shift()!;
+          writer.write(payload);
+          broadcastEvent({ eventType: "WRITE", payload });
+        }
+      } finally {
+        writer.releaseLock();
+      }
+      await new Promise((x) => setTimeout(x, 100));
     }
   };
 
@@ -76,10 +95,8 @@ export const createSerialReadStore = (
           value.forEach((v) => {
             inputBytes.push(v);
             if (
-              v === 0xf5 &&
-              inputBytes.at(-2) === 0xf6 &&
-              inputBytes.at(-3) === 0xf7 &&
-              inputBytes.at(-4) === 0xf8
+              everyEqual(inputBytes.slice(-4), radarDataOutputPayloadTrailer) ||
+              everyEqual(inputBytes.slice(-4), configurationPayloadTrailer)
             ) {
               const payload = new Uint8Array(inputBytes);
               broadcastEvent({
@@ -105,6 +122,7 @@ export const createSerialReadStore = (
   const connect = async () => {
     await port.open({ baudRate, parity: "none", stopBits: 1 });
     readForever();
+    writeForever();
     broadcastEvent({
       eventType: "CONNECT",
     });
@@ -126,5 +144,5 @@ export const createSerialReadStore = (
     };
   };
 
-  return { connect, disconnect, subscribe };
+  return { connect, write, disconnect, subscribe };
 };

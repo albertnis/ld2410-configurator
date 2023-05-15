@@ -13,11 +13,7 @@ export const everyEqual = (
   a: number[] | TypedArray,
   b: number[] | TypedArray
 ): boolean => {
-  console.log({ a, b });
   if (a.length !== b.length) {
-    console.warn(
-      "Elementwise array equality automatically failed as input arrays are of different lengths"
-    );
     return false;
   }
 

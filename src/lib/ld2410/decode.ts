@@ -1,20 +1,18 @@
 import { everyEqual } from "$lib/array/everyEqual";
-import type { LD2410Payload, RadarDataOutputTargetStatus } from "./types";
+import {
+  configurationPayloadHeader,
+  configurationPayloadTrailer,
+  enableConfigurationCommandWord,
+  endConfigurationCommandWord,
+  getMacAddressCommandWord,
+  radarDataOutputPayloadHeader,
+  radarDataOutputPayloadTrailer,
+  RadarDataOutputTargetStatusMap,
+  readFirmwareVersionCommandWord,
+} from "./constants";
+import type { LD2410ReadPayload } from "./types";
 
-const radarDataOutputPayloadHeader = [0xf4, 0xf3, 0xf2, 0xf1];
-const radarDataOutputPayloadTrailer = [0xf8, 0xf7, 0xf6, 0xf5];
-
-const RadarDataOutputTargetStatusMap: Record<
-  number,
-  RadarDataOutputTargetStatus
-> = {
-  0x00: "NO_TARGET",
-  0x01: "MOVEMENT_TARGET",
-  0x02: "STATIONARY_TARGET",
-  0x03: "MOVEMENT_AND_STATIONARY_TARGET",
-};
-
-export const decodeByteArrayToData = (vals: Uint8Array): LD2410Payload => {
+export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
   if (
     everyEqual(vals.slice(0, 4), radarDataOutputPayloadHeader) &&
     everyEqual(vals.slice(-4), radarDataOutputPayloadTrailer)
@@ -29,6 +27,51 @@ export const decodeByteArrayToData = (vals: Uint8Array): LD2410Payload => {
       stationaryTargetEnergy: vals[14],
       detectionDistanceCm: (vals[16] << 2) + vals[15],
     };
+  }
+
+  if (
+    everyEqual(vals.slice(0, 4), configurationPayloadHeader) &&
+    everyEqual(vals.slice(-4), configurationPayloadTrailer)
+  ) {
+    if (vals[6] === readFirmwareVersionCommandWord) {
+      return {
+        type: "READ_FIRMWARE_VERSION_ACK",
+        status: "SUCCESS",
+        majorVersion: (vals[13] + vals[12] * 1e-2).toFixed(2),
+        minorVersion: (
+          vals[17] * 1e6 +
+          vals[16] * 1e4 +
+          vals[15] * 1e2 +
+          vals[14]
+        ).toString(),
+      };
+    }
+
+    if (vals[6] === getMacAddressCommandWord) {
+      return {
+        type: "GET_MAC_ADDRESS_ACK",
+        status: "SUCCESS",
+        macAddress: [...vals.slice(10, 16)]
+          .map((x) => x.toString(16).toUpperCase())
+          .join(":"),
+      };
+    }
+
+    if (vals[6] === enableConfigurationCommandWord) {
+      return {
+        type: "ENABLE_CONFIGURATION_COMMAND_ACK",
+        status: vals[8] + vals[9] === 0 ? "SUCCESS" : "FAILURE",
+        protocolVersion: (vals[11] << 2) + vals[10],
+        bufferSize: (vals[13] << 2) + vals[12],
+      };
+    }
+
+    if (vals[6] === endConfigurationCommandWord) {
+      return {
+        type: "END_CONFIGURATION_COMMAND_ACK",
+        status: "SUCCESS",
+      };
+    }
   }
 
   return { type: "UNKNOWN" };

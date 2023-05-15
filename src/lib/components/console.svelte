@@ -4,7 +4,12 @@
 
   export let serialStore: SerialStore;
 
-  let codes: Uint8Array[] = [];
+  type Message = {
+    direction: "READ" | "WRITE";
+    payload: Uint8Array;
+  };
+
+  let codes: Message[] = [];
   let scrollToBottom: boolean = true;
   let outputDiv: HTMLDivElement;
 
@@ -16,10 +21,20 @@
   onMount(() => {
     serialStore.subscribe((event) => {
       if (event.eventType === "READ") {
-        codes = [...codes, event.payload].slice(-300);
-        if (scrollToBottom) {
-          outputDiv.scrollTop = outputDiv.scrollHeight;
-        }
+        const code: Message = {
+          direction: "READ",
+          payload: event.payload,
+        };
+        codes = [...codes, code].slice(-300);
+      } else if (event.eventType === "WRITE") {
+        const code: Message = {
+          direction: "WRITE",
+          payload: event.payload,
+        };
+        codes = [...codes, code].slice(-300);
+      }
+      if (scrollToBottom) {
+        outputDiv.scrollTop = outputDiv.scrollHeight;
       }
     });
   });
@@ -34,6 +49,6 @@
 
 <div style="height: 300px; overflow: scroll" bind:this={outputDiv}>
   {#each codes as code}
-    <div>{codesToHex(code)}</div>
+    <div>{code.direction}: {codesToHex(code.payload)}</div>
   {/each}
 </div>
