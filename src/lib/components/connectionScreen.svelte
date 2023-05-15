@@ -11,6 +11,8 @@
   };
 </script>
 
+<h2>Connection Options</h2>
+
 Configurator is disconnected
 
 <form>

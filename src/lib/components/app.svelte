@@ -12,6 +12,11 @@
     const port = await navigator.serial.requestPort();
     serialReadStore = createSerialReadStore(port, baudRate);
     await serialReadStore.connect();
+    serialReadStore.subscribe((event) => {
+      if (event.eventType === "DISCONNECT") {
+        serialReadStore = null;
+      }
+    });
   };
 </script>
 
