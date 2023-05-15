@@ -159,22 +159,6 @@
     on:click={readAllParameters}>Reload all</button
   >
 
-  <h3>Diagnostics</h3>
-
-  <dl>
-    <dt>Firmware version</dt>
-    <dd>{firmwareVerion}</dd>
-
-    <dt>Protocol version</dt>
-    <dd>{protocolVersion}</dd>
-
-    <dt>Buffer size</dt>
-    <dd>{bufferSize}</dd>
-
-    <dt>Mac address</dt>
-    <dd>{macAddress}</dd>
-  </dl>
-
   <h3>Configuration</h3>
 
   <form bind:this={formElement}>

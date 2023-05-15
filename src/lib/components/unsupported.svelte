@@ -2,7 +2,10 @@
   import Panel from "./panel.svelte";
 </script>
 
-<Panel title="Incompatible Browser">
+<Panel
+  title="Incompatible Browser"
+  class="col-start-[col-1-start] col-end-[col-2-end]"
+>
   <div>Not supported on this browser</div>
   <div>
     <a

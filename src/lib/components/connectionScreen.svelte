@@ -15,7 +15,7 @@
 
 <Panel
   title="Connection Options"
-  class="col-start-[col-1-start] col-end-[col-1-end]"
+  class="col-start-[col-1-start] col-end-[col-2-end]"
 >
   Configurator is disconnected
 
