@@ -11,8 +11,6 @@
 
   let firmwareVerion: string | undefined = undefined;
   let macAddress: string | undefined = undefined;
-  let protocolVersion: number | undefined = undefined;
-  let bufferSize: number | undefined = undefined;
 
   let sensitivity: Sensitivity | undefined = undefined;
   let timeout: number | undefined = undefined;
@@ -47,8 +45,10 @@
     );
   };
 
+  const gates = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;
+
   const onGateMotionSensitivityChange =
-    (gate: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) => (event: Event) => {
+    (gate: (typeof gates)[number]) => (event: Event) => {
       if (sensitivity == null) {
         throw new Error("Sensitivity was not defined so could not be updated");
       }
@@ -69,7 +69,7 @@
     };
 
   const onGateStaticSensitivityChange =
-    (gate: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) => (event: Event) => {
+    (gate: (typeof gates)[number]) => (event: Event) => {
       if (sensitivity == null) {
         throw new Error("Sensitivity was not defined so could not be updated");
       }
@@ -101,14 +101,7 @@
     serialStore.subscribe((e) => {
       if (e.eventType === "READ") {
         const payload = decodeByteArrayToData(e.payload);
-        if (payload.type === "READ_FIRMWARE_VERSION_ACK") {
-          firmwareVerion = `${payload.majorVersion}.${payload.minorVersion}`;
-        } else if (payload.type === "GET_MAC_ADDRESS_ACK") {
-          macAddress = payload.macAddress;
-        } else if (payload.type === "ENABLE_CONFIGURATION_COMMAND_ACK") {
-          ({ protocolVersion, bufferSize } = payload);
-        } else if (payload.type === "READ_PARAMETER_COMMAND_ACK") {
-          console.log(payload);
+        if (payload.type === "READ_PARAMETER_COMMAND_ACK") {
           ({
             sensitivity,
             timeout,
@@ -211,7 +204,7 @@
             <th>Rest sensitivity</th>
           </tr>
         </thead>
-        {#each [0, 1, 2, 3, 4, 5, 6, 7, 8] as i}
+        {#each gates as i}
           <tr>
             <td class="uppercase text-xs text-gray-400">Gate {i}</td>
             <td
