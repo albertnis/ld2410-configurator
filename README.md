@@ -1,6 +1,10 @@
 # LD2410 configurator
 
+![Screenshot showing LD2410 configurator in browser window](./screenshot.png)
+
 Display radar data and configure your LD2410 motion sensor, right from the browser! The aim of this project is to improve on the hard-to-use Windows-only tooling provided by HiLink.
+
+Visit the configurator at [ld2410.albert.nz](https://ld2410.albert.nz).
 
 Features:
 
@@ -11,12 +15,9 @@ Features:
 
 ## Usage and compatibility
 
-LD2410 configurator will soon be hosted online and can be used from any browser that supports the [WebSerial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API) (Chrome, Edge or Opera as at time of writing). When the site is deployed, usage will look something like this:
+LD2410 is hosted by Cloudflare Pages at [ld2410.albert.nz](https://ld2410.albert.nz). It can be used from any browser that supports the [WebSerial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API) (Chrome, Edge or Opera as at time of writing). Simply go to the site and follow the instructions to get started! You will need a serial adapter such as CP2102.
 
-1. Plug your LD2410 into your computer via a serial-to-USB adapter such as CP2102.
-1. Browse to the site and follow the instructions.
-
-In the mean time you will need to clone, install and run it locally using the instructions below.
+If you prefer, you can run the tool locally. Simply clone, install and run it using the instructions below.
 
 ## Develop
 
