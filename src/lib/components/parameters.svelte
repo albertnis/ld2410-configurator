@@ -45,6 +45,7 @@
     );
   };
 
+
   const gates = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;
 
   const onGateMotionSensitivityChange =
@@ -141,6 +142,30 @@
     );
     exitConfigurationMode();
   };
+
+  const bluetoothOn = () => {
+    enterConfigurationMode();
+    serialStore.write(
+      encodePayloadToByteArray({
+        type: "BLUETOOTH",
+        bluetooth: true,
+      })
+    );
+    exitConfigurationMode();
+    alert("reboot the Module");
+  };
+
+  const bluetoothOff = () => {
+    enterConfigurationMode();
+    serialStore.write(
+      encodePayloadToByteArray({
+        type: "BLUETOOTH",
+        bluetooth: false,
+      })
+    );
+    exitConfigurationMode();
+    alert("reboot the Module");
+  };
 </script>
 
 <Panel
@@ -150,6 +175,15 @@
   <button
     class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
     on:click={readAllParameters}>Reload all</button
+  >
+
+  <button
+    class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
+    on:click={bluetoothOn}>Bluetooth ON</button
+  >
+  <button
+    class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
+    on:click={bluetoothOff}>Bluetooth OFF</button
   >
   <form bind:this={formElement}>
     <label class="block">

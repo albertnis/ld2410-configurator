@@ -128,6 +128,11 @@ export type RangeGateSensitivityCommandPayload = {
   staticSensitivity: number;
 };
 
+export type BluetoothCommandPayload = {
+  type: "BLUETOOTH";
+  bluetooth: boolean;
+};
+
 export type RangeGateSensitivityCommandAckPayload = {
   type: "RANGE_GATE_SENSITIVITY_ACK";
   status: "SUCCESS" | "FAILURE";
@@ -144,7 +149,8 @@ export type LD2410WritePayload =
   | GetMacAddressPayload
   | ReadParamterCommandPayload
   | RangeGateSensitivityCommandPayload
-  | MaximumDistanceGateCommandPayload;
+  | MaximumDistanceGateCommandPayload
+  | BluetoothCommandPayload;
 
 export type LD2410ReadPayload =
   | RadarDataOutputBasicPayload

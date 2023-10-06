@@ -118,5 +118,16 @@ export const encodePayloadToByteArray = (
         0x00,
         ...configurationPayloadTrailer,
       ]);
+    case "BLUETOOTH":
+      return new Uint8Array([
+        ...configurationPayloadHeader,
+        0x04,
+        0x00,
+        0xA4,
+        0x00,
+        payload.bluetooth ? 0x01 : 0x00,
+        0x00,
+        ...configurationPayloadTrailer,
+      ]);
   }
 };

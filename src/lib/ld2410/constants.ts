@@ -3,6 +3,7 @@ import type { RadarDataOutputTargetStatus } from "./types";
 export const configurationPayloadHeader = [0xfd, 0xfc, 0xfb, 0xfa];
 export const configurationPayloadTrailer = [0x04, 0x03, 0x02, 0x01];
 
+
 export const readFirmwareVersionCommandWord = 0xa0;
 export const getMacAddressCommandWord = 0xa5;
 export const enableConfigurationCommandWord = 0xff;
