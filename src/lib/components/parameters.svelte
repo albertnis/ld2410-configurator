@@ -45,6 +45,12 @@
     );
   };
 
+  const enterEngineeringMode = () => {
+    serialStore.write(
+      encodePayloadToByteArray({ type: "ENGINEERING_MODE", enabled: true })
+    );
+  };
+
   const gates = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;
 
   const onGateMotionSensitivityChange =
@@ -94,6 +100,7 @@
     getFirmwareVersion();
     getMacAddress();
     readParameters();
+    enterEngineeringMode();
     exitConfigurationMode();
   };
 
@@ -141,6 +148,30 @@
     );
     exitConfigurationMode();
   };
+
+  const enableBluetooth = () => {
+    enterConfigurationMode();
+    serialStore.write(
+      encodePayloadToByteArray({
+        type: "BLUETOOTH",
+        enabled: true,
+      })
+    );
+    exitConfigurationMode();
+    alert("reboot the Module");
+  };
+
+  const disableBluetooth = () => {
+    enterConfigurationMode();
+    serialStore.write(
+      encodePayloadToByteArray({
+        type: "BLUETOOTH",
+        enabled: false,
+      })
+    );
+    exitConfigurationMode();
+    alert("reboot the Module");
+  };
 </script>
 
 <Panel
@@ -150,6 +181,15 @@
   <button
     class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
     on:click={readAllParameters}>Reload all</button
+  >
+
+  <button
+    class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
+    on:click={enableBluetooth}>Bluetooth ON</button
+  >
+  <button
+    class="hover:bg-blue-500 active:bg-blue-700 bg-blue-600 border rounded-sm border-blue-500 px-2 py-1"
+    on:click={disableBluetooth}>Bluetooth OFF</button
   >
   <form bind:this={formElement}>
     <label class="block">
