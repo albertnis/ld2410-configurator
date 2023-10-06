@@ -11,13 +11,35 @@ import {
   readFirmwareVersionCommandWord,
   readParameterCommandWord,
 } from "./constants";
-import type { LD2410ReadPayload } from "./types";
+import type { LD2410ReadPayload, Sensitivity } from "./types";
 
+const gates = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;
 export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
   if (
     everyEqual(vals.slice(0, 4), radarDataOutputPayloadHeader) &&
     everyEqual(vals.slice(-4), radarDataOutputPayloadTrailer)
   ) {
+    if(vals[6] == 0x01) {
+      let sensitivity: Sensitivity = <Sensitivity>{};
+      for(let i = 0; i <= gates.length; i++)
+      {
+        sensitivity[gates[i]] = {
+          motion: vals[19+i],
+          rest: vals[19+i+9],
+        };
+      }
+      return {
+        type: "RADAR_ENGINEERING_DATA_OUTPUT",
+        dataType: "TARGET_ENGINEERING_INFORMATION",
+        targetStatus: RadarDataOutputTargetStatusMap[vals[8]],
+        movementTargetDistanceCm: (vals[10] << 8) + vals[9],
+        movementTargetEnergy: vals[11],
+        stationaryTargetDistanceCm: (vals[13] << 8) + vals[12],
+        stationaryTargetEnergy: vals[14],
+        detectionDistanceCm: (vals[16] << 8) + vals[15],
+        sensitivity: sensitivity,
+      };
+    }
     return {
       type: "RADAR_DATA_OUTPUT",
       dataType: "TARGET_BASIC_INFORMATION",

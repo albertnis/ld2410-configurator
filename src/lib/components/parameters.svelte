@@ -45,6 +45,11 @@
     );
   };
 
+  const engineeringMode = () => {
+    serialStore.write(
+      encodePayloadToByteArray({ type: "ENGINEERING_MODE", engineering: true })
+    );
+  };
 
   const gates = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;
 
@@ -95,6 +100,7 @@
     getFirmwareVersion();
     getMacAddress();
     readParameters();
+    engineeringMode();
     exitConfigurationMode();
   };
 
@@ -114,6 +120,7 @@
     });
 
     readAllParameters();
+
   });
 
   const onTimeoutChange = (e: Event) => {

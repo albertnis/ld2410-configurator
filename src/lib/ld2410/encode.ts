@@ -129,5 +129,14 @@ export const encodePayloadToByteArray = (
         0x00,
         ...configurationPayloadTrailer,
       ]);
+    case "ENGINEERING_MODE":
+      return new Uint8Array([
+        ...configurationPayloadHeader,
+        0x02,
+        0x00,
+        payload.engineering ? 0x62 : 0x63,
+        0x00,
+        ...configurationPayloadTrailer,
+      ]);
   }
 };
