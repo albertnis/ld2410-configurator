@@ -15,6 +15,18 @@ export type RadarDataOutputBasicPayload = {
   detectionDistanceCm: number;
 };
 
+export type RadarDataOutputEngineeringPayload = {
+  type: "RADAR_ENGINEERING_DATA_OUTPUT";
+  dataType: "TARGET_ENGINEERING_INFORMATION";
+  targetStatus: RadarDataOutputTargetStatus;
+  movementTargetDistanceCm: number;
+  movementTargetEnergy: number;
+  stationaryTargetDistanceCm: number;
+  stationaryTargetEnergy: number;
+  detectionDistanceCm: number;
+  sensitivity: Sensitivity;
+};
+
 export type EnableConfigurationCommandPayload = {
   type: "ENABLE_CONFIGURATION_COMMAND";
 };
@@ -128,6 +140,16 @@ export type RangeGateSensitivityCommandPayload = {
   staticSensitivity: number;
 };
 
+export type BluetoothCommandPayload = {
+  type: "BLUETOOTH";
+  enabled: boolean;
+};
+
+export type EngineeringModeCommandPayload = {
+  type: "ENGINEERING_MODE";
+  enabled: boolean;
+};
+
 export type RangeGateSensitivityCommandAckPayload = {
   type: "RANGE_GATE_SENSITIVITY_ACK";
   status: "SUCCESS" | "FAILURE";
@@ -144,10 +166,13 @@ export type LD2410WritePayload =
   | GetMacAddressPayload
   | ReadParamterCommandPayload
   | RangeGateSensitivityCommandPayload
-  | MaximumDistanceGateCommandPayload;
+  | MaximumDistanceGateCommandPayload
+  | BluetoothCommandPayload
+  | EngineeringModeCommandPayload;
 
 export type LD2410ReadPayload =
   | RadarDataOutputBasicPayload
+  | RadarDataOutputEngineeringPayload
   | EnableConfigurationCommandAckPayload
   | EndConfigurationCommandAckPayload
   | ReadFirmwareVerionCommandAckPayload
