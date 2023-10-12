@@ -68,6 +68,7 @@ export const createSerialReadStore = (
       const writer = port.writable.getWriter();
       try {
         while (!stopping && writeQueue.length > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const payload = writeQueue.shift()!;
           writer.write(payload);
           broadcastEvent({ eventType: "WRITE", payload });

@@ -9,9 +9,6 @@
   export let serialStore: SerialStore;
   let formElement: HTMLFormElement;
 
-  let firmwareVerion: string | undefined = undefined;
-  let macAddress: string | undefined = undefined;
-
   let sensitivity: Sensitivity | undefined = undefined;
   let timeout: number | undefined = undefined;
   let maximumMovingDistanceGate: number | undefined = undefined;

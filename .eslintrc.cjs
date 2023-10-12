@@ -12,6 +12,9 @@ module.exports = {
       parserOptions: {
         parser: "@typescript-eslint/parser",
       },
+      rules: {
+        'no-undef': 'off'
+      }
     },
     {
       files: ["*.ts"],
@@ -20,6 +23,9 @@ module.exports = {
         project: "./tsconfig.json",
         extraFileExtensions: [".svelte"],
       },
+      rules: {
+        'no-undef': 'off'
+      }
     },
   ],
 };
