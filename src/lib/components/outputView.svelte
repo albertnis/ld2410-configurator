@@ -13,7 +13,10 @@
 
   const maxDistanceCm = 600;
   const gates = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;
-  let state: RadarDataOutputBasicPayload | RadarDataOutputEngineeringPayload | UnknownPayload = { type: "UNKNOWN" };
+  let state:
+    | RadarDataOutputBasicPayload
+    | RadarDataOutputEngineeringPayload
+    | UnknownPayload = { type: "UNKNOWN" };
 
   let stationaryTargetDetected = false;
   let movementTargetDetected = false;
@@ -33,19 +36,21 @@
 
   $: {
     stationaryTargetDetected =
-      (state.type === "RADAR_DATA_OUTPUT" || state.type === "RADAR_ENGINEERING_DATA_OUTPUT") &&
+      (state.type === "RADAR_DATA_OUTPUT" ||
+        state.type === "RADAR_ENGINEERING_DATA_OUTPUT") &&
       (state.targetStatus === "MOVEMENT_AND_STATIONARY_TARGET" ||
         state.targetStatus === "STATIONARY_TARGET");
 
     movementTargetDetected =
-      (state.type === "RADAR_DATA_OUTPUT" || state.type === "RADAR_ENGINEERING_DATA_OUTPUT") &&
+      (state.type === "RADAR_DATA_OUTPUT" ||
+        state.type === "RADAR_ENGINEERING_DATA_OUTPUT") &&
       (state.targetStatus === "MOVEMENT_AND_STATIONARY_TARGET" ||
         state.targetStatus === "MOVEMENT_TARGET");
   }
 </script>
 
 <Panel title="Output" class="col-start-[col-1-start] col-end-[col-1-end]">
-  {#if state.type === "RADAR_DATA_OUTPUT" || state.type === "RADAR_ENGINEERING_DATA_OUTPUT" }
+  {#if state.type === "RADAR_DATA_OUTPUT" || state.type === "RADAR_ENGINEERING_DATA_OUTPUT"}
     <dl>
       <dt class="inline uppercase text-xs text-gray-400">Target detection</dt>
       <dd class="hidden">{state.targetStatus}</dd>
@@ -127,38 +132,37 @@
         />
       </div>
       {#if state.type === "RADAR_ENGINEERING_DATA_OUTPUT"}
-      <table class="border-separate [border-spacing:1rem]" style="width: 100%;">
-        <thead>
-          <tr>
-            <th />
-            <th>Motion value</th>
-            <th>Rest value</th>
-          </tr>
-        </thead>
-        {#each gates as i}
-          <tr>
-            <td class="uppercase text-xs text-gray-400">Gate {i}</td>
-            <td
-              ><span class="hidden">Gate {i} motion sensitivity</span>
+        <table
+          class="border-separate [border-spacing:1rem]"
+          style="width: 100%;"
+        >
+          <thead>
+            <tr>
+              <th />
+              <th>Motion value</th>
+              <th>Rest value</th>
+            </tr>
+          </thead>
+          {#each gates as i}
+            <tr>
+              <td class="uppercase text-xs text-gray-400">Gate {i}</td>
+              <td
+                ><span class="hidden">Gate {i} motion sensitivity</span>
                 <div class="w-full relative border border-blue-500 h-4">
                   <div
-                    style={`width: ${
-                      (state.sensitivity[i].motion)
-                    }%`}
+                    style={`width: ${state.sensitivity[i].motion}%`}
                     class="absolute top-[1px] left-[1px] right-[1px] bottom-[1px] bg-blue-500"
                   />
                 </div>
                 <div class="text-sm font-bold text-grey-100">
                   {state.sensitivity[i].motion}
                 </div>
-            </td>
-            <td>
-              <span class="hidden">Gate {i} rest sensitivity</span>
+              </td>
+              <td>
+                <span class="hidden">Gate {i} rest sensitivity</span>
                 <div class="w-full relative border border-blue-500 h-4">
                   <div
-                    style={`width: ${
-                      (state.sensitivity[i].rest)
-                    }%`}
+                    style={`width: ${state.sensitivity[i].rest}%`}
                     class="absolute top-[1px] left-[1px] right-[1px] bottom-[1px] bg-blue-500"
                   />
                 </div>
@@ -166,13 +170,11 @@
                 <div class="text-sm font-bold text-grey-100">
                   {state.sensitivity[i].rest}
                 </div>
-            </td>
-          </tr>
-        {/each}
-      </table>
-    {/if}
-
-
+              </td>
+            </tr>
+          {/each}
+        </table>
+      {/if}
     </dl>
   {:else}
     Unknown state

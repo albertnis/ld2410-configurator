@@ -19,13 +19,12 @@ export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
     everyEqual(vals.slice(0, 4), radarDataOutputPayloadHeader) &&
     everyEqual(vals.slice(-4), radarDataOutputPayloadTrailer)
   ) {
-    if(vals[6] == 0x01) {
+    if (vals[6] == 0x01) {
       let sensitivity: Sensitivity = <Sensitivity>{};
-      for(let i = 0; i <= gates.length; i++)
-      {
+      for (let i = 0; i <= gates.length; i++) {
         sensitivity[gates[i]] = {
-          motion: vals[19+i],
-          rest: vals[19+i+9],
+          motion: vals[19 + i],
+          rest: vals[19 + i + 9],
         };
       }
       return {

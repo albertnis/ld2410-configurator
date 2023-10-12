@@ -123,7 +123,7 @@ export const encodePayloadToByteArray = (
         ...configurationPayloadHeader,
         0x04,
         0x00,
-        0xA4,
+        0xa4,
         0x00,
         payload.enabled ? 0x01 : 0x00,
         0x00,

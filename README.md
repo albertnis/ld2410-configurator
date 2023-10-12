@@ -37,7 +37,7 @@ npm run build
 
 ## Linting and formatting
 
-ESLint is used for linting. 
+ESLint is used for linting.
 
 ```bash
 npm run lint      # check

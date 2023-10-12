@@ -4,11 +4,13 @@
       href="https://albert.nz"
       target="_blank"
       class="text-white underline">Albert</a
-    > and <a
-    href="https://github.com/albertnis/ld2410-configurator/graphs/contributors"
-    target="_blank"
-    class="text-white underline">contributors</a
-  >
+    >
+    and
+    <a
+      href="https://github.com/albertnis/ld2410-configurator/graphs/contributors"
+      target="_blank"
+      class="text-white underline">contributors</a
+    >
   </div>
   <div>
     <a
