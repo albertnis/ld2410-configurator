@@ -1,0 +1,4 @@
+build/
+node_modules/
+.svelte-kit/
+.eslintrc.cjs

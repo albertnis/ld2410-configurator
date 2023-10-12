@@ -34,3 +34,19 @@ npm run dev -- --open
 ```bash
 npm run build
 ```
+
+## Linting and formatting
+
+ESLint is used for linting. 
+
+```bash
+npm run lint      # check
+npm run lint:fix  # fix all auto-fixable issues
+```
+
+Prettier is used for formatting.
+
+```bash
+npm run format       # check
+npm run format:fix   # auto-format
+```
