@@ -13,8 +13,8 @@ module.exports = {
         parser: "@typescript-eslint/parser",
       },
       rules: {
-        'no-undef': 'off'
-      }
+        "no-undef": "off",
+      },
     },
     {
       files: ["*.ts"],
@@ -24,8 +24,8 @@ module.exports = {
         extraFileExtensions: [".svelte"],
       },
       rules: {
-        'no-undef': 'off'
-      }
+        "no-undef": "off",
+      },
     },
   ],
 };
