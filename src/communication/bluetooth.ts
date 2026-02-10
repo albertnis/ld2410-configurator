@@ -1,6 +1,6 @@
 import { encodePayloadToByteArray } from "@/ld2410/encode";
 import { Result } from "@/types";
-import { type CommunicationEvent, type CommunicationClient } from ".";
+import type { CommunicationEvent, CommunicationClient } from ".";
 import { Subject } from "rxjs";
 import type { LD2410WritePayload } from "@/ld2410/types";
 import { decodeByteArrayToData } from "@/ld2410/decode";

@@ -9,18 +9,14 @@ export type Result<T, E> =
 	  };
 
 export const Result = {
-	ok: function <T>(data: T): Result<T, never> {
-		return {
-			success: true,
-			data,
-		};
-	},
-	error: function <E>(error: E): Result<never, E> {
-		return {
-			success: false,
-			error,
-		};
-	},
+	ok: <T>(data: T): Result<T, never> => ({
+		success: true,
+		data,
+	}),
+	error: <E>(error: E): Result<never, E> => ({
+		success: false,
+		error,
+	}),
 };
 
 export function assertNever(_: never) {}

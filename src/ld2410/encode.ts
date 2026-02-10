@@ -120,7 +120,7 @@ export const encodePayloadToByteArray = (
 				0x00,
 				...configurationPayloadTrailer,
 			]);
-		case "BLUETOOTH_LOGIN":
+		case "BLUETOOTH_LOGIN": {
 			const passwordBytes = stringToCharCodes(payload.password);
 			return new Uint8Array([
 				...configurationPayloadHeader,
@@ -131,6 +131,7 @@ export const encodePayloadToByteArray = (
 				...passwordBytes,
 				...configurationPayloadTrailer,
 			]);
+		}
 		case "BLUETOOTH":
 			return new Uint8Array([
 				...configurationPayloadHeader,

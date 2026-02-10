@@ -25,8 +25,8 @@ export const RadarDataOutputTargetStatusMap: Record<
 	number,
 	RadarDataOutputTargetStatus
 > = {
-	0x00: "NO_TARGET",
-	0x01: "MOVEMENT_TARGET",
-	0x02: "STATIONARY_TARGET",
-	0x03: "MOVEMENT_AND_STATIONARY_TARGET",
+	0: "NO_TARGET",
+	1: "MOVEMENT_TARGET",
+	2: "STATIONARY_TARGET",
+	3: "MOVEMENT_AND_STATIONARY_TARGET",
 };

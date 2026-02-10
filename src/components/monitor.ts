@@ -5,7 +5,7 @@ import {
 	queryElement,
 } from "@/dom/queryTemplateElement";
 import { assertNever } from "@/types";
-import { debounce, debounceTime, filter } from "rxjs";
+import { debounceTime, filter } from "rxjs";
 
 const ACTIVITY_INDICATOR_FLASH_DURATION_MS = 40;
 
@@ -61,7 +61,7 @@ elements.hideRadarOutputInput.addEventListener("change", (event) => {
 	const checked = (event.target as HTMLInputElement).checked;
 	setHideRadarOutput(checked);
 });
-elements.log.addEventListener("scroll", function () {
+elements.log.addEventListener("scroll", () => {
 	const scrolledToBottom =
 		elements.log.scrollHeight -
 			elements.log.scrollTop -
@@ -72,7 +72,7 @@ elements.log.addEventListener("scroll", function () {
 });
 
 function renderLogEntry(event: ClientEvent, timestamp: Date): void {
-	let fragment;
+	let fragment: DocumentFragment | undefined;
 	switch (event.type) {
 		case "CONNECT":
 		case "DISCONNECT": {

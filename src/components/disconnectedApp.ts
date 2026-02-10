@@ -1,9 +1,6 @@
 import { client } from "@/client";
 import { queryElement } from "@/dom/queryTemplateElement";
-import {
-	DEFAULT_BLUETOOTH_PASSWORD,
-	DEFAULT_SERIAL_BAUD_RATE,
-} from "@/ld2410/constants";
+import { DEFAULT_BLUETOOTH_PASSWORD } from "@/ld2410/constants";
 
 const elements = {
 	bluetoothButton: queryElement(".button-connectBluetooth"),

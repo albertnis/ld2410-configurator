@@ -1,10 +1,6 @@
 import { Result } from "@/types";
-import {
-	type CommunicationClient,
-	type CommunicationEvent,
-	type RxEvent,
-} from ".";
-import { filter, lastValueFrom, map, Subject, tap, timeout } from "rxjs";
+import type { CommunicationClient, CommunicationEvent, RxEvent } from ".";
+import { filter, lastValueFrom, map, Subject, timeout } from "rxjs";
 import { bufferDebounce, rateLimit } from "@/operators/bufferDebounce";
 import { concatUint8Arrays } from "@/array/concatUint8Array";
 import type { LD2410WritePayload } from "@/ld2410/types";

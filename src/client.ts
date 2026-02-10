@@ -4,11 +4,7 @@ import type {
 	RadarDataOutputTargetStatus,
 	Sensitivity,
 } from "./ld2410/types";
-import {
-	type CommunicationClient,
-	type RxEvent,
-	type TxEvent,
-} from "./communication";
+import type { CommunicationClient, RxEvent, TxEvent } from "./communication";
 import {
 	SerialCommunicationClient,
 	type SerialConnectionError,
@@ -17,7 +13,7 @@ import {
 	BluetoothCommunicationClient,
 	type BluetoothConnectionError,
 } from "./communication/bluetooth";
-import { filter, map, Observable, Subject, tap } from "rxjs";
+import { filter, map, type Observable, Subject } from "rxjs";
 
 export type ClientState = {
 	supportedFeatures: {
