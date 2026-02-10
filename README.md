@@ -24,6 +24,10 @@ If you prefer, you can run the tool locally. Simply clone, install and run it us
 You'll need [Bun](https://bun.com).
 
 ```bash
+bun install
+```
+
+```bash
 bun run dev
 ```
 
@@ -31,4 +35,16 @@ bun run dev
 
 ```bash
 bun run build
+```
+
+## Format
+
+```bash
+bun run format
+```
+
+## Lint
+
+```bash
+bun run lint
 ```
