@@ -24,7 +24,7 @@ export type RadarDataOutputEngineeringPayload = {
   stationaryTargetDistanceCm: number;
   stationaryTargetEnergy: number;
   detectionDistanceCm: number;
-  sensitivity: Sensitivity;
+  energy: Sensitivity;
 };
 
 export type EnableConfigurationCommandPayload = {
@@ -47,11 +47,11 @@ export type EndConfigurationCommandAckPayload = {
   status: "SUCCESS" | "FAILURE";
 };
 
-export type ReadFirmwareVerionCommandPayload = {
+export type ReadFirmwareVersionCommandPayload = {
   type: "READ_FIRMWARE_VERSION";
 };
 
-export type ReadFirmwareVerionCommandAckPayload = {
+export type ReadFirmwareVersionCommandAckPayload = {
   type: "READ_FIRMWARE_VERSION_ACK";
   status: "SUCCESS" | "FAILURE";
   majorVersion: string;
@@ -68,11 +68,11 @@ export type GetMacAddressPayloadAck = {
   macAddress: string;
 };
 
-export type ReadParamterCommandPayload = {
+export type ReadParameterCommandPayload = {
   type: "READ_PARAMETER_COMMAND";
 };
 
-export type ReadParamterCommandPayloadAck = {
+export type ReadParameterCommandPayloadAck = {
   type: "READ_PARAMETER_COMMAND_ACK";
   status: "SUCCESS" | "FAILURE";
   maximumDistanceGate: number;
@@ -140,6 +140,11 @@ export type RangeGateSensitivityCommandPayload = {
   staticSensitivity: number;
 };
 
+export type BluetoothLoginPayload = {
+  type: "BLUETOOTH_LOGIN";
+  password: string;
+};
+
 export type BluetoothCommandPayload = {
   type: "BLUETOOTH";
   enabled: boolean;
@@ -162,11 +167,12 @@ export type UnknownPayload = {
 export type LD2410WritePayload =
   | EnableConfigurationCommandPayload
   | EndConfigurationCommandPayload
-  | ReadFirmwareVerionCommandPayload
+  | ReadFirmwareVersionCommandPayload
   | GetMacAddressPayload
-  | ReadParamterCommandPayload
+  | ReadParameterCommandPayload
   | RangeGateSensitivityCommandPayload
   | MaximumDistanceGateCommandPayload
+  | BluetoothLoginPayload
   | BluetoothCommandPayload
   | EngineeringModeCommandPayload;
 
@@ -175,11 +181,9 @@ export type LD2410ReadPayload =
   | RadarDataOutputEngineeringPayload
   | EnableConfigurationCommandAckPayload
   | EndConfigurationCommandAckPayload
-  | ReadFirmwareVerionCommandAckPayload
+  | ReadFirmwareVersionCommandAckPayload
   | GetMacAddressPayloadAck
-  | ReadParamterCommandPayloadAck
+  | ReadParameterCommandPayloadAck
   | MaximumDistanceGateCommandAckPayload
   | RangeGateSensitivityCommandAckPayload
   | UnknownPayload;
-
-export type LD2410Payload = LD2410WritePayload | LD2410ReadPayload;

@@ -1,4 +1,4 @@
-import { everyEqual } from "$lib/array/everyEqual";
+import { everyEqual } from "@/array/everyEqual";
 import {
   configurationPayloadHeader,
   configurationPayloadTrailer,
@@ -20,11 +20,11 @@ export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
     everyEqual(vals.slice(-4), radarDataOutputPayloadTrailer)
   ) {
     if (vals[6] == 0x01) {
-      const sensitivity: Sensitivity = <Sensitivity>{};
-      for (let i = 0; i <= gates.length; i++) {
-        sensitivity[gates[i]] = {
-          motion: vals[19 + i],
-          rest: vals[19 + i + 9],
+      const energy: Sensitivity = <Sensitivity>{};
+      for (let i = 0; i < gates.length; i++) {
+        energy[gates[i]] = {
+          motion: vals[17 + i],
+          rest: vals[17 + i + gates.length],
         };
       }
       return {
@@ -36,7 +36,7 @@ export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
         stationaryTargetDistanceCm: (vals[13] << 8) + vals[12],
         stationaryTargetEnergy: vals[14],
         detectionDistanceCm: (vals[16] << 8) + vals[15],
-        sensitivity,
+        energy,
       };
     }
     return {

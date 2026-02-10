@@ -1,4 +1,6 @@
+import { stringToCharCodes } from "@/string/stringToCharCodes";
 import {
+  bluetoothPasswordCommandWord,
   configurationPayloadHeader,
   configurationPayloadTrailer,
   enableConfigurationCommandWord,
@@ -116,6 +118,17 @@ export const encodePayloadToByteArray = (
         0x00,
         0x00,
         0x00,
+        ...configurationPayloadTrailer,
+      ]);
+    case "BLUETOOTH_LOGIN":
+      const passwordBytes = stringToCharCodes(payload.password);
+      return new Uint8Array([
+        ...configurationPayloadHeader,
+        0x08,
+        0x00,
+        bluetoothPasswordCommandWord,
+        0x00,
+        ...passwordBytes,
         ...configurationPayloadTrailer,
       ]);
     case "BLUETOOTH":
