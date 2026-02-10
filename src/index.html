@@ -1,809 +1,817 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./index.css" />
-  </head>
-  <body>
-    <div id="app">
-      <h1 class="title">LD2410 Configurator</h1>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<link rel="stylesheet" href="./index.css">
+	</head>
+	<body>
+		<div id="app">
+			<h1 class="title">LD2410 Configurator</h1>
 
-      <div class="disconnectedApp">
-        <div class="box connectBox disconnectedApp-connectSerial">
-          <div>
-            <h2 class="iconHeader">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                <rect x="9" y="9" width="6" height="6"></rect>
-                <line x1="9" y1="1" x2="9" y2="4"></line>
-                <line x1="15" y1="1" x2="15" y2="4"></line>
-                <line x1="9" y1="20" x2="9" y2="23"></line>
-                <line x1="15" y1="20" x2="15" y2="23"></line>
-                <line x1="20" y1="9" x2="23" y2="9"></line>
-                <line x1="20" y1="14" x2="23" y2="14"></line>
-                <line x1="1" y1="9" x2="4" y2="9"></line>
-                <line x1="1" y1="14" x2="4" y2="14"></line></svg
-              >Serial
-            </h2>
-            <noscript>
-              <div class="warning">
-                You can't connect using serial because JavaScript is disabled
-              </div>
-            </noscript>
-            <p>Connect your LD2410 to a serial-to-USB adapter:</p>
-            <ul>
-              <li>
-                Connect <code>5V</code> to <code>VCC</code> and
-                <code>GND</code> to <code>GND</code>
-              </li>
-              <li>
-                Connect <code>RX</code> to <code>TX</code> and
-                <code>TX</code> to <code>RX</code>
-              </li>
-              <li>
-                Ensure adapter is connected to this device with any necessary
-                drivers installed
-              </li>
-            </ul>
-          </div>
-          <form class="connectBox-form connectSerial-form">
-            <div class="connectBox-form-controls">
-              <label for="connectSerial-baudRateSelect">Baud rate</label>
-              <select id="connectSerial-baudRateSelect">
-                <option value="9600">9600</option>
-                <option value="19200">19200</option>
-                <option value="38400">38400</option>
-                <option value="57600">57600</option>
-                <option value="115200">115200</option>
-                <option value="230400">230400</option>
-                <option value="256000" selected>256000 (default)</option>
-                <option value="460800">460800</option>
-              </select>
-            </div>
-            <button
-              disabled
-              title="JavaScript is disabled"
-              class="button button-connectSerial"
-              style="background-color: var(--color-primary)"
-            >
-              Connect using serial
-            </button>
-          </form>
-        </div>
-        <div class="box connectBox disconnectedApp-connectBluetooth">
-          <div>
-            <h2 class="iconHeader">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                style="height: 1em; width: 1em"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline
-                  points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"
-                ></polyline></svg
-              >Bluetooth
-            </h2>
-            <noscript>
-              <div class="warning">
-                You can't connect using Bluetooth because JavaScript is disabled
-              </div>
-            </noscript>
-            <p>Connect your LD2410 to Bluetooth:</p>
-            <ul>
-              <li>Ensure Bluetooth is enabled on the LD2410</li>
-              <li>
-                Connect <code>5V</code> to <code>VCC</code> and
-                <code>GND</code> to <code>GND</code>
-              </li>
-            </ul>
-          </div>
-          <form class="connectBox-form connectBluetooth-form">
-            <div class="connectBox-form-controls">
-              <label for="connectBluetooth-bluetoothPasswordInput"
-                >Password</label
-              >
-              <input
-                type="text"
-                name="bluetoothPassword"
-                id="connectBluetooth-bluetoothPasswordInput"
-                value="HiLink"
-              />
-              <button
-                class="connectBluetooth-useDefaultBluetoothPasswordButton"
-              >
-                Use default "HiLink"
-              </button>
-            </div>
-            <button
-              disabled=""
-              class="button button-connectBluetooth"
-              style="background-color: var(--color-primary)"
-              type="submit"
-            >
-              Connect using bluetooth
-            </button>
-          </form>
-        </div>
-      </div>
+			<div class="disconnectedApp">
+				<div class="box connectBox disconnectedApp-connectSerial">
+					<div>
+						<h2 class="iconHeader">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+								<rect x="9" y="9" width="6" height="6"></rect>
+								<line x1="9" y1="1" x2="9" y2="4"></line>
+								<line x1="15" y1="1" x2="15" y2="4"></line>
+								<line x1="9" y1="20" x2="9" y2="23"></line>
+								<line x1="15" y1="20" x2="15" y2="23"></line>
+								<line x1="20" y1="9" x2="23" y2="9"></line>
+								<line x1="20" y1="14" x2="23" y2="14"></line>
+								<line x1="1" y1="9" x2="4" y2="9"></line>
+								<line x1="1" y1="14" x2="4" y2="14"></line>
+							</svg>
+							Serial
+						</h2>
+						<noscript>
+							<div class="warning">
+								You can't connect using serial because JavaScript is disabled
+							</div>
+						</noscript>
+						<p>Connect your LD2410 to a serial-to-USB adapter:</p>
+						<ul>
+							<li>
+								Connect <code>5V</code> to <code>VCC</code> and
+								<code>GND</code> to <code>GND</code>
+							</li>
+							<li>
+								Connect <code>RX</code> to <code>TX</code> and
+								<code>TX</code> to <code>RX</code>
+							</li>
+							<li>
+								Ensure adapter is connected to this device with any necessary
+								drivers installed
+							</li>
+						</ul>
+					</div>
+					<form class="connectBox-form connectSerial-form">
+						<div class="connectBox-form-controls">
+							<label for="connectSerial-baudRateSelect">Baud rate</label>
+							<select id="connectSerial-baudRateSelect">
+								<option value="9600">9600</option>
+								<option value="19200">19200</option>
+								<option value="38400">38400</option>
+								<option value="57600">57600</option>
+								<option value="115200">115200</option>
+								<option value="230400">230400</option>
+								<option value="256000" selected>256000 (default)</option>
+								<option value="460800">460800</option>
+							</select>
+						</div>
+						<button
+							disabled
+							title="JavaScript is disabled"
+							class="button button-connectSerial"
+							style="background-color: var(--color-primary)"
+						>
+							Connect using serial
+						</button>
+					</form>
+				</div>
+				<div class="box connectBox disconnectedApp-connectBluetooth">
+					<div>
+						<h2 class="iconHeader">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								style="height: 1em; width: 1em"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<polyline
+									points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"
+								></polyline>
+							</svg>
+							Bluetooth
+						</h2>
+						<noscript>
+							<div class="warning">
+								You can't connect using Bluetooth because JavaScript is disabled
+							</div>
+						</noscript>
+						<p>Connect your LD2410 to Bluetooth:</p>
+						<ul>
+							<li>Ensure Bluetooth is enabled on the LD2410</li>
+							<li>
+								Connect <code>5V</code> to <code>VCC</code> and
+								<code>GND</code> to <code>GND</code>
+							</li>
+						</ul>
+					</div>
+					<form class="connectBox-form connectBluetooth-form">
+						<div class="connectBox-form-controls">
+							<label for="connectBluetooth-bluetoothPasswordInput">
+								Password
+							</label>
+							<input
+								type="text"
+								name="bluetoothPassword"
+								id="connectBluetooth-bluetoothPasswordInput"
+								value="HiLink"
+							>
+							<button
+								class="connectBluetooth-useDefaultBluetoothPasswordButton"
+							>
+								Use default "HiLink"
+							</button>
+						</div>
+						<button
+							disabled=""
+							class="button button-connectBluetooth"
+							style="background-color: var(--color-primary)"
+							type="submit"
+						>
+							Connect using bluetooth
+						</button>
+					</form>
+				</div>
+			</div>
 
-      <div class="connectedApp">
-        <div class="box connectedApp-output">
-          <h2 class="iconHeader">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-target"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <circle cx="12" cy="12" r="6"></circle>
-              <circle cx="12" cy="12" r="2"></circle>
-            </svg>
-            Output
-          </h2>
+			<div class="connectedApp">
+				<div class="box connectedApp-output">
+					<h2 class="iconHeader">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-target"
+						>
+							<circle cx="12" cy="12" r="10"></circle>
+							<circle cx="12" cy="12" r="6"></circle>
+							<circle cx="12" cy="12" r="2"></circle>
+						</svg>
+						Output
+					</h2>
 
-          <dl class="distanceIndicator distanceIndicator-detectionDistance">
-            <dt>Detection distance</dt>
-            <dd>
-              <data id="distanceIndicator-detectionDistance"
-                ><span class="value">Unknown</span
-                ><span class="unit">cm</span></data
-              >
-            </dd>
-          </dl>
+					<dl class="distanceIndicator distanceIndicator-detectionDistance">
+						<dt>Detection distance</dt>
+						<dd>
+							<data id="distanceIndicator-detectionDistance">
+								<span class="value">Unknown</span><span class="unit">cm</span>
+							</data>
+						</dd>
+					</dl>
 
-          <dl
-            class="distanceIndicator distanceIndicator-movementTargetDistance"
-          >
-            <dt>
-              Movement target
-              <span class="chip distanceIndicator-detected">Detected</span>
-            </dt>
-            <dd>
-              <data id="distanceIndicator-movementTargetDistance">
-                <span class="value">Unknown</span><span class="unit">cm</span>
-              </data>
-            </dd>
-          </dl>
+					<dl
+						class="distanceIndicator distanceIndicator-movementTargetDistance"
+					>
+						<dt>
+							Movement target
+							<span class="chip distanceIndicator-detected">Detected</span>
+						</dt>
+						<dd>
+							<data id="distanceIndicator-movementTargetDistance">
+								<span class="value">Unknown</span><span class="unit">cm</span>
+							</data>
+						</dd>
+					</dl>
 
-          <dl
-            class="distanceIndicator distanceIndicator-stationaryTargetDistance"
-          >
-            <dt>
-              Stationary target
-              <span class="chip distanceIndicator-detected">Detected</span>
-            </dt>
-            <dd>
-              <data id="distanceIndicator-stationaryTargetDistance">
-                <span class="value">Unknown</span><span class="unit">cm</span>
-              </data>
-            </dd>
-          </dl>
+					<dl
+						class="distanceIndicator distanceIndicator-stationaryTargetDistance"
+					>
+						<dt>
+							Stationary target
+							<span class="chip distanceIndicator-detected">Detected</span>
+						</dt>
+						<dd>
+							<data id="distanceIndicator-stationaryTargetDistance">
+								<span class="value">Unknown</span><span class="unit">cm</span>
+							</data>
+						</dd>
+					</dl>
 
-          <table class="energyIndicators">
-            <thead>
-              <tr>
-                <td></td>
-                <td>Motion</td>
-                <td>Rest</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Gate 1</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-0"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-0"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 2</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-1"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-1"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 3</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-2"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-2"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 4</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-3"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-3"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 5</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-4"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-4"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 6</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-5"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-5"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 7</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-6"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-6"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 8</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-7"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-7"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 9</td>
-                <td>
-                  <data class="energyIndicator-motion energyIndicator-motion-8"
-                    >Unknown</data
-                  >
-                </td>
-                <td>
-                  <data class="energyIndicator-rest energyIndicator-rest-8"
-                    >Unknown</data
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+					<table class="energyIndicators">
+						<thead>
+							<tr>
+								<td></td>
+								<td>Motion</td>
+								<td>Rest</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Gate 1</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-0">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-0">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 2</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-1">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-1">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 3</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-2">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-2">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 4</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-3">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-3">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 5</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-4">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-4">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 6</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-5">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-5">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 7</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-6">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-6">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 8</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-7">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-7">
+										Unknown
+									</data>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 9</td>
+								<td>
+									<data class="energyIndicator-motion energyIndicator-motion-8">
+										Unknown
+									</data>
+								</td>
+								<td>
+									<data class="energyIndicator-rest energyIndicator-rest-8">
+										Unknown
+									</data>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
-        <div class="box connectedApp-parameters">
-          <h2 class="iconHeader">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-tool"
-            >
-              <path
-                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
-              ></path>
-            </svg>
-            Parameters
-          </h2>
+				<div class="box connectedApp-parameters">
+					<h2 class="iconHeader">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-tool"
+						>
+							<path
+								d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+							></path>
+						</svg>
+						Parameters
+					</h2>
 
-          <table class="sensitivityInputs">
-            <thead>
-              <tr>
-                <td></td>
-                <td>Motion</td>
-                <td>Rest</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Gate 1</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-0"
-                    id="sensitivity-motion-0"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-0"
-                    id="sensitivity-rest-0"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 2</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-1"
-                    id="sensitivity-motion-1"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-1"
-                    id="sensitivity-rest-1"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 3</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-2"
-                    id="sensitivity-motion-2"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-2"
-                    id="sensitivity-rest-2"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 4</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-3"
-                    id="sensitivity-motion-3"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-3"
-                    id="sensitivity-rest-3"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 5</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-4"
-                    id="sensitivity-motion-4"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-4"
-                    id="sensitivity-rest-4"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 6</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-5"
-                    id="sensitivity-motion-5"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-5"
-                    id="sensitivity-rest-5"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 7</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-6"
-                    id="sensitivity-motion-6"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-6"
-                    id="sensitivity-rest-6"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 8</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-7"
-                    id="sensitivity-motion-7"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-7"
-                    id="sensitivity-rest-7"
-                    disabled
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gate 9</td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-motion-8"
-                    id="sensitivity-motion-8"
-                    disabled
-                  />
-                </td>
-                <td>
-                  <input
-                    type="range"
-                    value="0"
-                    min="0"
-                    max="100"
-                    name="sensitivity-rest-8"
-                    id="sensitivity-rest-8"
-                    disabled
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+					<table class="sensitivityInputs">
+						<thead>
+							<tr>
+								<td></td>
+								<td>Motion</td>
+								<td>Rest</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Gate 1</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-0"
+										id="sensitivity-motion-0"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-0"
+										id="sensitivity-rest-0"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 2</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-1"
+										id="sensitivity-motion-1"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-1"
+										id="sensitivity-rest-1"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 3</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-2"
+										id="sensitivity-motion-2"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-2"
+										id="sensitivity-rest-2"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 4</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-3"
+										id="sensitivity-motion-3"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-3"
+										id="sensitivity-rest-3"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 5</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-4"
+										id="sensitivity-motion-4"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-4"
+										id="sensitivity-rest-4"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 6</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-5"
+										id="sensitivity-motion-5"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-5"
+										id="sensitivity-rest-5"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 7</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-6"
+										id="sensitivity-motion-6"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-6"
+										id="sensitivity-rest-6"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 8</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-7"
+										id="sensitivity-motion-7"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-7"
+										id="sensitivity-rest-7"
+										disabled
+									>
+								</td>
+							</tr>
+							<tr>
+								<td>Gate 9</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-motion-8"
+										id="sensitivity-motion-8"
+										disabled
+									>
+								</td>
+								<td>
+									<input
+										type="range"
+										value="0"
+										min="0"
+										max="100"
+										name="sensitivity-rest-8"
+										id="sensitivity-rest-8"
+										disabled
+									>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
-        <div class="box connectedApp-connectionInformation">
-          <h2 class="iconHeader">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            Information
-          </h2>
-          <dl>
-            <dt>Firmware version</dt>
-            <dd>
-              <code class="connectionInformation-firmwareVersion">Unknown</code>
-            </dd>
+				<div class="box connectedApp-connectionInformation">
+					<h2 class="iconHeader">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-info"
+						>
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="12" y1="16" x2="12" y2="12"></line>
+							<line x1="12" y1="8" x2="12.01" y2="8"></line>
+						</svg>
+						Information
+					</h2>
+					<dl>
+						<dt>Firmware version</dt>
+						<dd>
+							<code class="connectionInformation-firmwareVersion">Unknown</code>
+						</dd>
 
-            <dt>MAC address</dt>
-            <dd>
-              <code class="connectionInformation-macAddress">Unknown</code>
-            </dd>
+						<dt>MAC address</dt>
+						<dd>
+							<code class="connectionInformation-macAddress">Unknown</code>
+						</dd>
 
-            <dt>Protocol version</dt>
-            <dd>
-              <code class="connectionInformation-protocolVersion">Unknown</code>
-            </dd>
-          </dl>
-          <button class="connectionInformation-disconnectButton">
-            Disconnect
-          </button>
-        </div>
-      </div>
+						<dt>Protocol version</dt>
+						<dd>
+							<code class="connectionInformation-protocolVersion">Unknown</code>
+						</dd>
+					</dl>
+					<button class="connectionInformation-disconnectButton">
+						Disconnect
+					</button>
+				</div>
+			</div>
 
-      <div class="monitor">
-        <div class="monitor-header">
-          <div class="monitor-header-start">
-            <h2 class="iconHeader">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-file-text"
-              >
-                <path
-                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                ></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline></svg
-              >Monitor
-            </h2>
-            <span class="chip" style="background-color: var(--color-primary)">
-              <div style="display: flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-arrow-down-left"
-                >
-                  <line x1="17" y1="7" x2="7" y2="17"></line>
-                  <polyline points="17 17 7 17 7 7"></polyline></svg
-                >RX<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="activityIndicator activityIndicator-rx"
-                >
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-            </span>
-            <span class="chip" style="background-color: var(--color-secondary)"
-              ><div style="display: flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-arrow-up-right"
-                >
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline></svg
-                >TX<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="activityIndicator activityIndicator-tx"
-                >
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-            </span>
-          </div>
-          <div class="monitor-header-end">
-            <label class="monitor-hideRadarOutputInput"
-              ><input
-                type="checkbox"
-                name="hideRadarOutputInput"
-                id="monitor-hideRadarOutputInput"
-              />Hide radar output</label
-            >
-            <button id="monitor-scrollToBottomButton">Scroll to bottom</button>
-            <label
-              ><input
-                type="checkbox"
-                name="minimizeInput"
-                id="monitor-minimizeInput"
-              />Minimize</label
-            >
-          </div>
-        </div>
-        <ol class="monitor-log"></ol>
-      </div>
-    </div>
+			<div class="monitor">
+				<div class="monitor-header">
+					<div class="monitor-header-start">
+						<h2 class="iconHeader">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-file-text"
+							>
+								<path
+									d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+								></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<polyline points="10 9 9 9 8 9"></polyline>
+							</svg>
+							Monitor
+						</h2>
+						<span class="chip" style="background-color: var(--color-primary)">
+							<div style="display: flex">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="feather feather-arrow-down-left"
+								>
+									<line x1="17" y1="7" x2="7" y2="17"></line>
+									<polyline points="17 17 7 17 7 7"></polyline>
+								</svg>
+								RX
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="activityIndicator activityIndicator-rx"
+								>
+									<circle cx="12" cy="12" r="3" />
+								</svg>
+							</div>
+						</span>
+						<span class="chip" style="background-color: var(--color-secondary)"
+							><div style="display: flex">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="feather feather-arrow-up-right"
+								>
+									<line x1="7" y1="17" x2="17" y2="7"></line>
+									<polyline points="7 7 17 7 17 17"></polyline>
+								</svg>
+								TX
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="activityIndicator activityIndicator-tx"
+								>
+									<circle cx="12" cy="12" r="3" />
+								</svg>
+							</div>
+						</span>
+					</div>
+					<div class="monitor-header-end">
+						<label class="monitor-hideRadarOutputInput">
+							<input
+								type="checkbox"
+								name="hideRadarOutputInput"
+								id="monitor-hideRadarOutputInput"
+							>
+							Hide radar output
+						</label>
+						<button id="monitor-scrollToBottomButton">Scroll to bottom</button>
+						<label>
+							<input
+								type="checkbox"
+								name="minimizeInput"
+								id="monitor-minimizeInput"
+							>
+							Minimize
+						</label>
+					</div>
+				</div>
+				<ol class="monitor-log"></ol>
+			</div>
+		</div>
 
-    <template id="template-monitor-logEntry-rx">
-      <li class="monitor-log-entry monitor-log-entry-read">
-        <time></time>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-arrow-down-left"
-        >
-          <line x1="17" y1="7" x2="7" y2="17"></line>
-          <polyline points="17 17 7 17 7 7"></polyline>
-        </svg>
-        <code></code>
-        <span class="chip chip-primary"></span>
-      </li>
-    </template>
-    <template id="template-monitor-logEntry-tx">
-      <li class="monitor-log-entry monitor-log-entry-write">
-        <time></time>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-arrow-up-right"
-        >
-          <line x1="7" y1="17" x2="17" y2="7"></line>
-          <polyline points="7 7 17 7 17 17"></polyline>
-        </svg>
-        <code></code>
-        <span class="chip chip-secondary"></span>
-      </li>
-    </template>
-    <template id="template-monitor-logEntry-disconnect">
-      <li class="monitor-log-entry">
-        <time></time>
-        <span class="chip chip-error">Disconnect</span>
-      </li>
-    </template>
-    <template id="template-monitor-logEntry-connect">
-      <li class="monitor-log-entry">
-        <time></time>
-        <span class="chip chip-success">Connect</span>
-      </li>
-    </template>
-    <script src="./index.ts" type="module"></script>
-  </body>
+		<template id="template-monitor-logEntry-rx">
+			<li class="monitor-log-entry monitor-log-entry-read">
+				<time></time>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="feather feather-arrow-down-left"
+				>
+					<line x1="17" y1="7" x2="7" y2="17"></line>
+					<polyline points="17 17 7 17 7 7"></polyline>
+				</svg>
+				<code></code>
+				<span class="chip chip-primary"></span>
+			</li>
+		</template>
+		<template id="template-monitor-logEntry-tx">
+			<li class="monitor-log-entry monitor-log-entry-write">
+				<time></time>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="feather feather-arrow-up-right"
+				>
+					<line x1="7" y1="17" x2="17" y2="7"></line>
+					<polyline points="7 7 17 7 17 17"></polyline>
+				</svg>
+				<code></code>
+				<span class="chip chip-secondary"></span>
+			</li>
+		</template>
+		<template id="template-monitor-logEntry-disconnect">
+			<li class="monitor-log-entry">
+				<time></time>
+				<span class="chip chip-error">Disconnect</span>
+			</li>
+		</template>
+		<template id="template-monitor-logEntry-connect">
+			<li class="monitor-log-entry">
+				<time></time>
+				<span class="chip chip-success">Connect</span>
+			</li>
+		</template>
+		<script src="./index.ts" type="module"></script>
+	</body>
 </html>

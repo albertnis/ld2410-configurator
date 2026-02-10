@@ -1,189 +1,189 @@
 export type RadarDataOutputTargetStatus =
-  | "NO_TARGET"
-  | "MOVEMENT_TARGET"
-  | "STATIONARY_TARGET"
-  | "MOVEMENT_AND_STATIONARY_TARGET";
+	| "NO_TARGET"
+	| "MOVEMENT_TARGET"
+	| "STATIONARY_TARGET"
+	| "MOVEMENT_AND_STATIONARY_TARGET";
 
 export type RadarDataOutputBasicPayload = {
-  type: "RADAR_DATA_OUTPUT";
-  dataType: "TARGET_BASIC_INFORMATION";
-  targetStatus: RadarDataOutputTargetStatus;
-  movementTargetDistanceCm: number;
-  movementTargetEnergy: number;
-  stationaryTargetDistanceCm: number;
-  stationaryTargetEnergy: number;
-  detectionDistanceCm: number;
+	type: "RADAR_DATA_OUTPUT";
+	dataType: "TARGET_BASIC_INFORMATION";
+	targetStatus: RadarDataOutputTargetStatus;
+	movementTargetDistanceCm: number;
+	movementTargetEnergy: number;
+	stationaryTargetDistanceCm: number;
+	stationaryTargetEnergy: number;
+	detectionDistanceCm: number;
 };
 
 export type RadarDataOutputEngineeringPayload = {
-  type: "RADAR_ENGINEERING_DATA_OUTPUT";
-  dataType: "TARGET_ENGINEERING_INFORMATION";
-  targetStatus: RadarDataOutputTargetStatus;
-  movementTargetDistanceCm: number;
-  movementTargetEnergy: number;
-  stationaryTargetDistanceCm: number;
-  stationaryTargetEnergy: number;
-  detectionDistanceCm: number;
-  energy: Sensitivity;
+	type: "RADAR_ENGINEERING_DATA_OUTPUT";
+	dataType: "TARGET_ENGINEERING_INFORMATION";
+	targetStatus: RadarDataOutputTargetStatus;
+	movementTargetDistanceCm: number;
+	movementTargetEnergy: number;
+	stationaryTargetDistanceCm: number;
+	stationaryTargetEnergy: number;
+	detectionDistanceCm: number;
+	energy: Sensitivity;
 };
 
 export type EnableConfigurationCommandPayload = {
-  type: "ENABLE_CONFIGURATION_COMMAND";
+	type: "ENABLE_CONFIGURATION_COMMAND";
 };
 
 export type EnableConfigurationCommandAckPayload = {
-  type: "ENABLE_CONFIGURATION_COMMAND_ACK";
-  status: "SUCCESS" | "FAILURE";
-  protocolVersion: number;
-  bufferSize: number;
+	type: "ENABLE_CONFIGURATION_COMMAND_ACK";
+	status: "SUCCESS" | "FAILURE";
+	protocolVersion: number;
+	bufferSize: number;
 };
 
 export type EndConfigurationCommandPayload = {
-  type: "END_CONFIGURATION_COMMAND";
+	type: "END_CONFIGURATION_COMMAND";
 };
 
 export type EndConfigurationCommandAckPayload = {
-  type: "END_CONFIGURATION_COMMAND_ACK";
-  status: "SUCCESS" | "FAILURE";
+	type: "END_CONFIGURATION_COMMAND_ACK";
+	status: "SUCCESS" | "FAILURE";
 };
 
 export type ReadFirmwareVersionCommandPayload = {
-  type: "READ_FIRMWARE_VERSION";
+	type: "READ_FIRMWARE_VERSION";
 };
 
 export type ReadFirmwareVersionCommandAckPayload = {
-  type: "READ_FIRMWARE_VERSION_ACK";
-  status: "SUCCESS" | "FAILURE";
-  majorVersion: string;
-  minorVersion: string;
+	type: "READ_FIRMWARE_VERSION_ACK";
+	status: "SUCCESS" | "FAILURE";
+	majorVersion: string;
+	minorVersion: string;
 };
 
 export type GetMacAddressPayload = {
-  type: "GET_MAC_ADDRESS";
+	type: "GET_MAC_ADDRESS";
 };
 
 export type GetMacAddressPayloadAck = {
-  type: "GET_MAC_ADDRESS_ACK";
-  status: "SUCCESS" | "FAILURE";
-  macAddress: string;
+	type: "GET_MAC_ADDRESS_ACK";
+	status: "SUCCESS" | "FAILURE";
+	macAddress: string;
 };
 
 export type ReadParameterCommandPayload = {
-  type: "READ_PARAMETER_COMMAND";
+	type: "READ_PARAMETER_COMMAND";
 };
 
 export type ReadParameterCommandPayloadAck = {
-  type: "READ_PARAMETER_COMMAND_ACK";
-  status: "SUCCESS" | "FAILURE";
-  maximumDistanceGate: number;
-  maximumMovingDistanceGate: number;
-  maximumStaticDistanceGate: number;
-  sensitivity: Sensitivity;
-  timeout: number;
+	type: "READ_PARAMETER_COMMAND_ACK";
+	status: "SUCCESS" | "FAILURE";
+	maximumDistanceGate: number;
+	maximumMovingDistanceGate: number;
+	maximumStaticDistanceGate: number;
+	sensitivity: Sensitivity;
+	timeout: number;
 };
 
 export type Sensitivity = {
-  0: {
-    motion: number;
-    rest: number;
-  };
-  1: {
-    motion: number;
-    rest: number;
-  };
-  2: {
-    motion: number;
-    rest: number;
-  };
-  3: {
-    motion: number;
-    rest: number;
-  };
-  4: {
-    motion: number;
-    rest: number;
-  };
-  5: {
-    motion: number;
-    rest: number;
-  };
-  6: {
-    motion: number;
-    rest: number;
-  };
-  7: {
-    motion: number;
-    rest: number;
-  };
-  8: {
-    motion: number;
-    rest: number;
-  };
+	0: {
+		motion: number;
+		rest: number;
+	};
+	1: {
+		motion: number;
+		rest: number;
+	};
+	2: {
+		motion: number;
+		rest: number;
+	};
+	3: {
+		motion: number;
+		rest: number;
+	};
+	4: {
+		motion: number;
+		rest: number;
+	};
+	5: {
+		motion: number;
+		rest: number;
+	};
+	6: {
+		motion: number;
+		rest: number;
+	};
+	7: {
+		motion: number;
+		rest: number;
+	};
+	8: {
+		motion: number;
+		rest: number;
+	};
 };
 
 export type MaximumDistanceGateCommandPayload = {
-  type: "MAXIMUM_DISTANCE_GATE";
-  maximumMovingDistanceGate: number;
-  maximumStaticDistanceGate: number;
-  timeout: number;
+	type: "MAXIMUM_DISTANCE_GATE";
+	maximumMovingDistanceGate: number;
+	maximumStaticDistanceGate: number;
+	timeout: number;
 };
 
 export type MaximumDistanceGateCommandAckPayload = {
-  type: "MAXIMUM_DISTANCE_GATE_ACK";
-  status: "SUCCESS" | "FAILURE";
+	type: "MAXIMUM_DISTANCE_GATE_ACK";
+	status: "SUCCESS" | "FAILURE";
 };
 
 export type RangeGateSensitivityCommandPayload = {
-  type: "RANGE_GATE_SENSITIVITY";
-  gate: number | "ALL_GATES";
-  motionSensitivity: number;
-  staticSensitivity: number;
+	type: "RANGE_GATE_SENSITIVITY";
+	gate: number | "ALL_GATES";
+	motionSensitivity: number;
+	staticSensitivity: number;
 };
 
 export type BluetoothLoginPayload = {
-  type: "BLUETOOTH_LOGIN";
-  password: string;
+	type: "BLUETOOTH_LOGIN";
+	password: string;
 };
 
 export type BluetoothCommandPayload = {
-  type: "BLUETOOTH";
-  enabled: boolean;
+	type: "BLUETOOTH";
+	enabled: boolean;
 };
 
 export type EngineeringModeCommandPayload = {
-  type: "ENGINEERING_MODE";
-  enabled: boolean;
+	type: "ENGINEERING_MODE";
+	enabled: boolean;
 };
 
 export type RangeGateSensitivityCommandAckPayload = {
-  type: "RANGE_GATE_SENSITIVITY_ACK";
-  status: "SUCCESS" | "FAILURE";
+	type: "RANGE_GATE_SENSITIVITY_ACK";
+	status: "SUCCESS" | "FAILURE";
 };
 
 export type UnknownPayload = {
-  type: "UNKNOWN";
+	type: "UNKNOWN";
 };
 
 export type LD2410WritePayload =
-  | EnableConfigurationCommandPayload
-  | EndConfigurationCommandPayload
-  | ReadFirmwareVersionCommandPayload
-  | GetMacAddressPayload
-  | ReadParameterCommandPayload
-  | RangeGateSensitivityCommandPayload
-  | MaximumDistanceGateCommandPayload
-  | BluetoothLoginPayload
-  | BluetoothCommandPayload
-  | EngineeringModeCommandPayload;
+	| EnableConfigurationCommandPayload
+	| EndConfigurationCommandPayload
+	| ReadFirmwareVersionCommandPayload
+	| GetMacAddressPayload
+	| ReadParameterCommandPayload
+	| RangeGateSensitivityCommandPayload
+	| MaximumDistanceGateCommandPayload
+	| BluetoothLoginPayload
+	| BluetoothCommandPayload
+	| EngineeringModeCommandPayload;
 
 export type LD2410ReadPayload =
-  | RadarDataOutputBasicPayload
-  | RadarDataOutputEngineeringPayload
-  | EnableConfigurationCommandAckPayload
-  | EndConfigurationCommandAckPayload
-  | ReadFirmwareVersionCommandAckPayload
-  | GetMacAddressPayloadAck
-  | ReadParameterCommandPayloadAck
-  | MaximumDistanceGateCommandAckPayload
-  | RangeGateSensitivityCommandAckPayload
-  | UnknownPayload;
+	| RadarDataOutputBasicPayload
+	| RadarDataOutputEngineeringPayload
+	| EnableConfigurationCommandAckPayload
+	| EndConfigurationCommandAckPayload
+	| ReadFirmwareVersionCommandAckPayload
+	| GetMacAddressPayloadAck
+	| ReadParameterCommandPayloadAck
+	| MaximumDistanceGateCommandAckPayload
+	| RangeGateSensitivityCommandAckPayload
+	| UnknownPayload;
