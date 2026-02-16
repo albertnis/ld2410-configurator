@@ -132,7 +132,7 @@ function flashActivityIndicator(type: "tx" | "rx") {
 	const element =
 		type === "tx" ? elements.activityIndicatorTx : elements.activityIndicatorRx;
 
-	element.animate([{ fill: "currentColor" }, { fill: "currentColor" }], {
+	element.animate([{ opacity: "0.5" }, { opacity: "0.5" }], {
 		duration: ACTIVITY_INDICATOR_FLASH_DURATION_MS,
 	});
 }
