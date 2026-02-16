@@ -6,6 +6,12 @@ import type { LD2410WritePayload } from "@/ld2410/types";
 import { decodeByteArrayToData } from "@/ld2410/decode";
 import { rateLimit } from "@/operators/bufferDebounce";
 
+/**
+ * Module level pointer to current event subject for use by
+ * singleton event handler {@linkcode handleRx}
+ */
+let currentEventSubject: Subject<CommunicationEvent>;
+
 export type BluetoothConnectionError =
 	| "DEVICE_REQUEST_FAILURE"
 	| "DEVICE_NOT_GATT"
@@ -80,20 +86,15 @@ export class BluetoothCommunicationClient implements CommunicationClient {
 			return Result.error("GATT_SERVICE_FAILURE");
 		}
 
-		console.log("Subscribing to GATT receive events");
-		this.characteristics.receive.startNotifications();
+		currentEventSubject = this.eventSubject;
 		this.characteristics.receive.addEventListener(
 			"characteristicvaluechanged",
-			(event) => {
-				// @ts-expect-error
-				const bytes = new Uint8Array(event.target.value.buffer);
-				this.eventSubject.next({
-					type: "RX",
-					bytes,
-					payload: decodeByteArrayToData(bytes),
-				});
-			},
+			(event) => handleRx(event),
 		);
+
+		this.device.addEventListener("gattserverdisconnected", () => {
+			this.eventSubject.complete();
+		});
 
 		this.txSubject.pipe(rateLimit(200)).subscribe({
 			next: async (payload) => {
@@ -116,6 +117,9 @@ export class BluetoothCommunicationClient implements CommunicationClient {
 			},
 		});
 
+		console.log("Subscribing to GATT events");
+		this.characteristics.receive.startNotifications();
+
 		return Result.ok(undefined);
 	}
 
@@ -132,10 +136,20 @@ export class BluetoothCommunicationClient implements CommunicationClient {
 			}
 		} catch (error) {
 			this.eventSubject.error(error);
-		} finally {
-			this.device = undefined;
-			this.characteristics = undefined;
-			this.eventSubject.complete();
 		}
 	}
+}
+
+/**
+ * Module level handler for `characteristicvaluechanged` to account for
+ * an issue where the event listener can only be registered once globally
+ */
+// biome-ignore lint/suspicious/noExplicitAny: BT types don't capture event type correctly
+function handleRx(event: any) {
+	const bytes = new Uint8Array(event.target.value.buffer);
+	currentEventSubject.next({
+		type: "RX",
+		bytes,
+		payload: decodeByteArrayToData(bytes),
+	});
 }

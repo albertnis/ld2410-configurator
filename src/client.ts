@@ -109,14 +109,6 @@ class Client {
 	private registerCommunicationClient(
 		communicationClient: CommunicationClient,
 	) {
-		this.eventSubject
-			.pipe(
-				filter((x) => x.type === "RX"),
-				map((x) => x.payload),
-				map(clientStateUpdateFromReadPayload),
-			)
-			.subscribe(stateUpdates);
-
 		this.communicationClient = communicationClient;
 		this.communicationClient.events.subscribe({
 			next: (event) => {
@@ -131,6 +123,17 @@ class Client {
 				this.eventSubject.error(error);
 			},
 		});
+
+		this.eventSubject
+			.pipe(
+				filter((x) => x.type === "RX"),
+				map((x) => x.payload),
+				map(clientStateUpdateFromReadPayload),
+			)
+			.subscribe({
+				next: (x) => stateUpdates.next(x),
+				error: () => {},
+			});
 	}
 
 	/** Send initial commands common to all connection methods */
@@ -167,6 +170,7 @@ class Client {
 
 	public async disconnect() {
 		await this.communicationClient?.disconnect();
+		this.communicationClient = undefined;
 	}
 }
 
