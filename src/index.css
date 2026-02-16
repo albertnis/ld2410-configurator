@@ -4,14 +4,15 @@
 	color-scheme: light dark;
 	box-sizing: border-box;
 
-	--color-bg-1: #111111;
-	--color-bg-2: #242424;
+	--color-bg-1: oklch(0.1 0.03 263.02 / 65%);
+	--color-bg-2: oklch(0.22 0.03 263.02);
 
-	--color-fg-1: rgba(255, 255, 255, 0.87);
-	--color-fg-2: rgba(255, 255, 255, 0.5);
-	--color-fg-3: rgba(163, 163, 163, 0.33);
-	--color-fg-secondary: oklch(0.74 0.1466 318.17);
+	--color-fg-1: oklch(0.9 0.03 263.02);
+	--color-fg-2: oklch(0.6 0.03 263.02);
+	--color-fg-3: oklch(0.3 0.03 263.02);
+
 	--color-fg-primary: oklch(0.74 0.1485 263.02);
+	--color-fg-secondary: oklch(0.74 0.1466 318.17);
 	--color-fg-tertiary: oklch(0.74 0.1202 60.71);
 	--color-fg-highlight: var(--color-fg-primary);
 
@@ -19,10 +20,8 @@
 	--color-bg-primary: oklch(0.54 0.1485 263.02);
 	--color-bg-tertiary: oklch(0.54 0.1202 60.71);
 
-	--color-success: rgb(24, 200, 0);
-	--color-primary: rgb(24, 90, 220);
-	--color-secondary: rgb(178, 90, 205);
-	--color-error: rgb(208, 45, 45);
+	--color-bg-success: oklch(0.54 0.3 150);
+	--color-bg-error: rgb(208, 45, 45);
 
 	--spacing-xs: 0.25rem;
 	--spacing-sm: 0.5rem;
@@ -30,6 +29,9 @@
 
 	--border-radius-sm: 0.5rem;
 	--border-radius-md: 1rem;
+
+	--blur-radius: 16px;
+	--shadow-radius: 16px;
 
 	color: var(--color-fg-1);
 	background-color: var(--color-bg-2);
@@ -54,21 +56,247 @@ body {
 }
 
 .title {
+	position: sticky;
+	z-index: 2;
+	top: var(--spacing-md);
 	margin: var(--spacing-md);
+	padding: var(--spacing-md);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	backdrop-filter: blur(var(--blur-radius));
+	box-shadow:
+		0px 0px 0px 1px rgba(255 255 255 / 15%),
+		0px 5px var(--shadow-radius) rgba(0 0 0 / 30%);
+
+	width: calc(768px - var(--spacing-md) * 2);
+	border-radius: var(--border-radius-md);
+	justify-self: center;
+	background: linear-gradient(
+		240deg,
+		color-mix(in hsl, transparent 40%, var(--color-bg-success) 60%),
+		color-mix(in hsl, var(--color-bg-1) 70%, var(--color-bg-success) 30%) 30%,
+		var(--color-bg-1) 50%
+	);
+	background-size: 200% 100%;
+
+	transition:
+		top 0.1s ease-out,
+		margin 0.1s ease-out,
+		border-radius 0.1s ease-out,
+		background-size 0.5s ease-out;
+
+	h1 {
+		margin: 0;
+		font-size: x-large;
+		cursor: default;
+
+		@media screen and (max-width: 480px) {
+			& {
+				font-size: large;
+			}
+		}
+	}
+
+	#app.connected & {
+		background-size: 100% 100%;
+	}
+
+	@media screen and (max-width: 768px) {
+		& {
+			top: 0;
+			margin: 0;
+			border-radius: 0;
+			justify-self: unset;
+			width: 100%;
+		}
+	}
+
+	.connectionChip {
+		box-sizing: border-box;
+		height: 1rem;
+		border-radius: 1rem;
+		padding: 1rem;
+		anchor-name: --chip-anchor;
+
+		.icon {
+			display: none;
+		}
+
+		#app.connected-serial & .serial.icon {
+			display: block;
+		}
+
+		#app.connected-bluetooth & .bluetooth.icon {
+			display: block;
+		}
+
+		.connectionChip-connected {
+			display: none;
+			align-items: center;
+			gap: var(--spacing-sm);
+		}
+
+		#app.connected & {
+			background-color: var(--color-bg-success);
+			cursor: pointer;
+
+			&:hover {
+				background-color: color-mix(
+					in lab,
+					var(--color-bg-success) 80%,
+					white 20%
+				);
+			}
+
+			.connectionChip-disconnected {
+				display: none;
+			}
+
+			.connectionChip-connected {
+				display: flex;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+.icon {
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	width: 1em;
+	height: 1em;
+}
+
+#connectedPopover {
+	position: absolute;
+	position-anchor: --chip-anchor;
+	position-area: end span-start;
+	margin: 0;
+	right: 0;
+	width: 200px;
+	border-radius: var(--border-radius-md);
+	border: none;
+	box-shadow:
+		0px 0px 0px 1px rgba(255 255 255 / 15%),
+		0px 5px var(--shadow-radius) rgba(0 0 0 / 30%);
+	backdrop-filter: blur(var(--blur-radius));
+
+	background-color: var(--color-bg-1);
+	padding: var(--spacing-sm);
+	color: inherit;
+
+	&:popover-open {
+		animation: popover-show 0.1s forwards ease-out;
+	}
+}
+
+@keyframes popover-show {
+	0% {
+		opacity: 0;
+		top: 0;
+		transform: scale(0.95);
+	}
+
+	100% {
+		opacity: 1;
+		top: var(--spacing-sm);
+		transform: scale(1);
+	}
+}
+
+.menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-sm);
+
+	* {
+		box-sizing: border-box;
+	}
+
+	li {
+		border-radius: var(--border-radius-sm);
+	}
+
+	.menuItem {
+		width: 100%;
+		padding: var(--spacing-sm);
+		border-radius: var(--border-radius-sm);
+	}
+
+	.menuButton {
+		width: 100%;
+		padding: var(--spacing-sm);
+		border-radius: var(--border-radius-sm);
+		border: none;
+		cursor: pointer;
+
+		color: inherit;
+		font: inherit;
+
+		--color-bg-button: var(--color-bg-2);
+
+		background-color: var(--color-bg-button);
+
+		transition: background-color 0.1s ease-in-out;
+
+		&.menuButton:hover {
+			background-color: color-mix(
+				in lab,
+				var(--color-fg-1) 20%,
+				var(--color-bg-button) 80%
+			);
+		}
+
+		&.menuButton:active {
+			background-color: color-mix(
+				in lab,
+				var(--color-bg-1) 20%,
+				var(--color-bg-button) 80%
+			);
+		}
+
+		&.destructive {
+			--color-bg-button: var(--color-bg-error);
+		}
+	}
+}
+
+.connectionInformation {
+	dt {
+		font-size: 0.875rem;
+		color: var(--color-fg-2);
+		cursor: default;
+
+		&:not(:first-child) {
+			margin-top: var(--spacing-sm);
+		}
+	}
+
+	dd {
+		margin: 0;
+	}
 }
 
 .disconnectedApp {
 	display: grid;
 	align-self: center;
-	grid-template-columns: 1fr [col-start-1] 400px [col-end-1 col-start-2] 400px [col-end-2] 1fr;
+	grid-template-columns: 1fr [col-start-1] 330px [col-end-1 col-start-2] 330px [col-end-2] 1fr;
 	gap: var(--spacing-md);
+
+	#app.connected & {
+		display: none;
+	}
 }
 
-[data-connected] .disconnectedApp {
-	display: none;
-}
-
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
 	.disconnectedApp {
 		align-self: flex-start;
 		grid-template-columns: 0 [col-start-1 col-start-2] 1fr [col-end-1 col-end-2] 0;
@@ -102,20 +330,15 @@ body {
 	gap: var(--spacing-md);
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1280px) {
 	.connectedApp {
 		align-self: flex-start;
 		grid-template-columns: 0 [col-start-1 col-start-2] 1fr [col-end-1 col-end-2] 0;
 	}
 }
 
-[data-connected] .connectedApp {
+#app.connected .connectedApp {
 	display: grid;
-}
-
-.connectedApp-connectionInformation {
-	grid-column-start: col-start-1;
-	grid-column-end: col-end-1;
 }
 
 .connectedApp-output {
@@ -293,11 +516,35 @@ body {
 }
 
 .monitor {
+	position: sticky;
+	backdrop-filter: blur(var(--blur-radius));
+	bottom: var(--spacing-md);
+	margin: var(--spacing-md);
+	padding: var(--spacing-sm);
+	border-radius: var(--border-radius-md);
+
 	background-color: var(--color-bg-1);
 	max-height: 30vh;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+
+	box-shadow:
+		0px 0px 0px 1px rgba(255 255 255 / 15%),
+		0px 5px var(--shadow-radius) rgba(0 0 0 / 30%);
+
+	transition:
+		bottom 0.1s ease-out,
+		margin 0.1s ease-out,
+		border-radius 0.1s ease-out;
+
+	@media screen and (max-width: 768px) {
+		& {
+			bottom: 0;
+			margin: 0;
+			border-radius: 0;
+		}
+	}
 }
 
 .monitor-header {
@@ -383,6 +630,9 @@ body {
 	align-items: center;
 	gap: var(--spacing-sm);
 	margin: 0;
+	font-size: 1.2rem;
+	font-weight: normal;
+	color: var(--color-fg-2);
 }
 
 .button {
@@ -390,6 +640,14 @@ body {
 	border: none;
 	border-radius: var(--border-radius-sm);
 	color: var(--color-fg-1);
+
+	&.primary {
+		background-color: var(--color-bg-primary);
+	}
+
+	&.secondary {
+		background-color: var(--color-bg-secondary);
+	}
 }
 
 .button:disabled {
@@ -397,28 +655,38 @@ body {
 }
 
 .chip {
-	padding: 0 var(--spacing-sm);
-	border-radius: var(--border-radius-sm);
+	font-size: 0.9em;
+	padding: 0.05em var(--spacing-sm);
+	border-radius: 0.5em;
 	color: var(--color-fg-1);
 	display: flex;
 	align-items: center;
 	cursor: default;
-}
+	outline: none;
+	border: none;
 
-.chip-primary {
-	background-color: var(--color-primary);
-}
+	span {
+		display: flex;
+		align-items: center;
+	}
 
-.chip-secondary {
-	background-color: var(--color-secondary);
-}
+	background-color: var(--color-bg-2);
 
-.chip-error {
-	background-color: var(--color-error);
-}
+	&.primary {
+		background-color: var(--color-bg-primary);
+	}
 
-.chip-success {
-	background-color: var(--color-success);
+	&.secondary {
+		background-color: var(--color-bg-secondary);
+	}
+
+	&.error {
+		background-color: var(--color-bg-error);
+	}
+
+	&.success {
+		background-color: var(--color-bg-success);
+	}
 }
 
 .monitor-log-entry-read svg {
