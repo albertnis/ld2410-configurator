@@ -160,6 +160,15 @@ export type RangeGateSensitivityCommandAckPayload = {
 	status: "SUCCESS" | "FAILURE";
 };
 
+export type RestartPayload = {
+	type: "RESTART";
+};
+
+export type RestartAckPayload = {
+	type: "RESTART_ACK";
+	status: "SUCCESS" | "FAILURE";
+};
+
 export type UnknownPayload = {
 	type: "UNKNOWN";
 };
@@ -174,7 +183,8 @@ export type LD2410WritePayload =
 	| MaximumDistanceGateCommandPayload
 	| BluetoothLoginPayload
 	| BluetoothCommandPayload
-	| EngineeringModeCommandPayload;
+	| EngineeringModeCommandPayload
+	| RestartPayload;
 
 export type LD2410ReadPayload =
 	| RadarDataOutputBasicPayload
@@ -186,4 +196,5 @@ export type LD2410ReadPayload =
 	| ReadParameterCommandPayloadAck
 	| MaximumDistanceGateCommandAckPayload
 	| RangeGateSensitivityCommandAckPayload
-	| UnknownPayload;
+	| UnknownPayload
+	| RestartAckPayload;

@@ -10,6 +10,7 @@ import {
 	rangeGateSensitivityCommandWord,
 	readFirmwareVersionCommandWord,
 	readParameterCommandWord,
+	restartCommandWord,
 } from "./constants";
 import type { LD2410WritePayload } from "./types";
 
@@ -149,6 +150,15 @@ export const encodePayloadToByteArray = (
 				0x02,
 				0x00,
 				payload.enabled ? 0x62 : 0x63,
+				0x00,
+				...configurationPayloadTrailer,
+			]);
+		case "RESTART":
+			return new Uint8Array([
+				...configurationPayloadHeader,
+				0x02,
+				0x00,
+				restartCommandWord,
 				0x00,
 				...configurationPayloadTrailer,
 			]);

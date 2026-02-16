@@ -8,8 +8,10 @@ import {
 	radarDataOutputPayloadHeader,
 	radarDataOutputPayloadTrailer,
 	RadarDataOutputTargetStatusMap,
+	rangeGateSensitivityCommandWord,
 	readFirmwareVersionCommandWord,
 	readParameterCommandWord,
+	restartCommandWord,
 } from "./constants";
 import type { LD2410ReadPayload, Sensitivity } from "./types";
 
@@ -141,6 +143,20 @@ export const decodeByteArrayToData = (vals: Uint8Array): LD2410ReadPayload => {
 					},
 				},
 				timeout: (vals[33] << 8) + vals[32],
+			};
+		}
+
+		if (vals[6] === rangeGateSensitivityCommandWord) {
+			return {
+				type: "RANGE_GATE_SENSITIVITY_ACK",
+				status: vals[7] === 0x0 ? "SUCCESS" : "FAILURE",
+			};
+		}
+
+		if (vals[6] === restartCommandWord) {
+			return {
+				type: "RESTART_ACK",
+				status: vals[7] === 0x0 ? "SUCCESS" : "FAILURE",
 			};
 		}
 	}
