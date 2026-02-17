@@ -545,6 +545,61 @@ body {
 			border-radius: 0;
 		}
 	}
+
+	#monitor-minimizeInput {
+		display: none;
+	}
+
+	&.minimized {
+		.monitor-log {
+			display: none;
+		}
+
+		.monitor-hideRadarOutputInput {
+			display: none;
+		}
+
+		#monitor-scrollToBottomButton {
+			display: none;
+		}
+	}
+}
+
+.iconButton {
+	display: flex;
+	border-radius: var(--border-radius-sm);
+	border: none;
+	font: inherit;
+	background-color: transparent;
+	color: inherit;
+	padding: var(--spacing-sm);
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--color-bg-2);
+	}
+
+	input[type="checkbox"] {
+		display: none;
+	}
+
+	.checkedIcon {
+		display: none;
+	}
+
+	.uncheckedIcon {
+		display: unset;
+	}
+
+	& :checked {
+		& ~ .checkedIcon {
+			display: unset;
+		}
+
+		& ~ .uncheckedIcon {
+			display: none;
+		}
+	}
 }
 
 .monitor-header {
@@ -573,24 +628,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: var(--spacing-xs);
+	min-height: 10vh;
 }
 
 .monitor-log:empty {
 	padding: 0;
-}
-
-.monitor.monitor-minimized {
-	.monitor-log {
-		display: none;
-	}
-
-	.monitor-hideRadarOutputInput {
-		display: none;
-	}
-
-	#monitor-scrollToBottomButton {
-		display: none;
-	}
 }
 
 .monitor-log.hideRadarOutput .monitor-log-entry.radarOutput {

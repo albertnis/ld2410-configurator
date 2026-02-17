@@ -156,9 +156,9 @@ function setHideRadarOutput(hideRadarOutput: boolean) {
 function setMinimized(minimized: boolean) {
 	elements.minimizeInput.checked = minimized;
 	if (minimized) {
-		elements.monitor.classList.add("monitor-minimized");
+		elements.monitor.classList.add("minimized");
 	} else {
-		elements.monitor.classList.remove("monitor-minimized");
+		elements.monitor.classList.remove("minimized");
 	}
 }
 

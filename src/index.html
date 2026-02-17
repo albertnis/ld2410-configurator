@@ -722,15 +722,8 @@
 						<span class="primary chip">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
 								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-arrow-down-left activityIndicator-rx"
+								class="icon activityIndicator-rx"
 							>
 								<line x1="17" y1="7" x2="7" y2="17"></line>
 								<polyline points="17 17 7 17 7 7"></polyline>
@@ -740,15 +733,8 @@
 						<div class="secondary chip">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
 								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-arrow-up-right activityIndicator-tx"
+								class="icon activityIndicator-tx"
 							>
 								<line x1="7" y1="17" x2="17" y2="7"></line>
 								<polyline points="7 7 17 7 17 17"></polyline>
@@ -757,22 +743,70 @@
 						</div>
 					</div>
 					<div class="monitor-header-end">
-						<label class="monitor-hideRadarOutputInput">
+						<label
+							class="iconButton monitor-hideRadarOutputInput"
+							title="Show/hide radar output"
+						>
 							<input
 								type="checkbox"
 								name="hideRadarOutputInput"
 								id="monitor-hideRadarOutputInput"
+								aria-label="Hide radar output"
 							>
-							Hide radar output
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="icon uncheckedIcon"
+							>
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="icon checkedIcon"
+							>
+								<path
+									d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+								></path>
+								<line x1="1" y1="1" x2="23" y2="23"></line>
+							</svg>
 						</label>
-						<button id="monitor-scrollToBottomButton">Scroll to bottom</button>
-						<label>
+						<button
+							class="iconButton"
+							id="monitor-scrollToBottomButton"
+							title="Scroll to bottom"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="icon"
+							>
+								<polyline points="7 13 12 18 17 13"></polyline>
+								<polyline points="7 6 12 11 17 6"></polyline>
+							</svg>
+						</button>
+						<label class="iconButton" title="Show/hide monitor log">
 							<input
 								type="checkbox"
 								name="minimizeInput"
 								id="monitor-minimizeInput"
+								aria-label="Hide monitor log entries"
 							>
-							Minimize
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="icon checkedIcon"
+							>
+								<polyline points="18 15 12 9 6 15"></polyline>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="icon uncheckedIcon"
+							>
+								<polyline points="6 9 12 15 18 9"></polyline>
+							</svg>
 						</label>
 					</div>
 				</div>
