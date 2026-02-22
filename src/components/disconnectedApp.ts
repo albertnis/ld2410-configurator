@@ -3,10 +3,15 @@ import { queryElement } from "@/dom/queryTemplateElement";
 import { DEFAULT_BLUETOOTH_PASSWORD } from "@/ld2410/constants";
 
 const elements = {
-	bluetoothButton: queryElement(".button-connectBluetooth"),
-	bluetoothForm: queryElement(".connectBluetooth-form") as HTMLFormElement,
-	serialButton: queryElement(".button-connectSerial"),
-	serialForm: queryElement(".connectSerial-form") as HTMLFormElement,
+	bluetoothBox: queryElement(".bluetooth.connectBox") as HTMLDivElement,
+	bluetoothButton: queryElement("#connectBluetooth-button"),
+	bluetoothForm: queryElement(".bluetooth.connectBox form") as HTMLFormElement,
+	bluetoothUnsupportedCallout: queryElement(
+		".bluetooth.connectBox .unsupportedCallout",
+	) as HTMLFormElement,
+	serialBox: queryElement(".serial.connectBox") as HTMLDivElement,
+	serialButton: queryElement("#connectSerial-button"),
+	serialForm: queryElement(".serial.connectBox form") as HTMLFormElement,
 	baudRateSelect: queryElement(
 		"#connectSerial-baudRateSelect",
 	) as HTMLSelectElement,
@@ -14,7 +19,7 @@ const elements = {
 		"#connectBluetooth-bluetoothPasswordInput",
 	) as HTMLInputElement,
 	useDefaultBluetoothPasswordButton: queryElement(
-		".connectBluetooth-useDefaultBluetoothPasswordButton",
+		"#connectBluetooth-useDefaultBluetoothPasswordButton",
 	),
 };
 
@@ -38,12 +43,19 @@ elements.serialForm.addEventListener("submit", (event) => {
 	event.preventDefault();
 	const baud = Number(elements.baudRateSelect.value);
 	console.log("Connecting with baud", baud);
-	client.connectSerial(baud);
+	markAsLoading("serial");
+	client.connectSerial(baud).finally(markAsNotLoading);
 });
 
 elements.bluetoothForm.addEventListener("submit", (event) => {
 	event.preventDefault();
-	client.connectBluetooth(elements.bluetoothPasswordInput.value);
+	if (!elements.bluetoothForm.reportValidity()) {
+		return;
+	}
+	markAsLoading("bluetooth");
+	client
+		.connectBluetooth(elements.bluetoothPasswordInput.value)
+		.finally(markAsNotLoading);
 });
 
 elements.useDefaultBluetoothPasswordButton.addEventListener("click", () => {
@@ -52,30 +64,19 @@ elements.useDefaultBluetoothPasswordButton.addEventListener("click", () => {
 
 function renderSupport(support: Support) {
 	if (support.serial.supported) {
-		elements.serialButton.removeAttribute("disabled");
-		elements.serialButton.removeAttribute("title");
+		elements.serialBox.classList.add("supported");
 	} else {
-		elements.serialButton.setAttribute("disabled", "");
-		elements.serialButton.setAttribute(
-			"title",
-			"Your browser doesn't support Web Serial",
-		);
+		elements.serialBox.classList.add("unsupported");
 	}
 
 	if (support.bluetooth.supported) {
-		elements.bluetoothButton.removeAttribute("disabled");
-	} else if (support.bluetooth.reason === "unavailable") {
-		elements.bluetoothButton.setAttribute("disabled", "");
-		elements.bluetoothButton.setAttribute(
-			"title",
-			"Your device has no Bluetooth adapter",
-		);
+		elements.bluetoothBox.classList.add("supported");
 	} else {
-		elements.bluetoothButton.setAttribute("disabled", "");
-		elements.bluetoothButton.setAttribute(
-			"title",
-			"Your browser doesn't support Web Bluetooth",
-		);
+		if (support.bluetooth.reason === "unavailable") {
+			elements.bluetoothUnsupportedCallout.innerHTML =
+				"Your device has no Bluetooth adapter";
+		}
+		elements.bluetoothBox.classList.add("unsupported");
 	}
 }
 
@@ -96,4 +97,20 @@ async function getSupport(): Promise<Support> {
 						reason: "unsupported",
 					},
 	};
+}
+
+function markAsLoading(method: "bluetooth" | "serial") {
+	for (const el of [elements.bluetoothButton, elements.serialButton]) {
+		el.setAttribute("disabled", "true");
+		el.setAttribute("aria-busy", "true");
+	}
+	elements[`${method}Button`].classList.add("loading");
+}
+
+function markAsNotLoading() {
+	for (const el of [elements.bluetoothButton, elements.serialButton]) {
+		el.removeAttribute("disabled");
+		el.removeAttribute("aria-busy");
+		el.classList.remove("loading");
+	}
 }
