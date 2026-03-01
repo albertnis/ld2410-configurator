@@ -10,10 +10,10 @@ import { debounceTime, filter } from "rxjs";
 const ACTIVITY_INDICATOR_FLASH_DURATION_MS = 40;
 
 const templates = {
-	rx: queryTemplateElement("#template-monitor-logEntry-rx"),
-	tx: queryTemplateElement("#template-monitor-logEntry-tx"),
-	connect: queryTemplateElement("#template-monitor-logEntry-connect"),
-	disconnect: queryTemplateElement("#template-monitor-logEntry-disconnect"),
+	rx: queryTemplateElement("#template-monitorLogEntry-rx"),
+	tx: queryTemplateElement("#template-monitorLogEntry-tx"),
+	connect: queryTemplateElement("#template-monitorLogEntry-connect"),
+	disconnect: queryTemplateElement("#template-monitorLogEntry-disconnect"),
 };
 
 const elements = {
@@ -95,11 +95,13 @@ function renderLogEntry(event: ClientEvent, timestamp: Date): void {
 				(event.payload.type === "RADAR_DATA_OUTPUT" ||
 					event.payload.type === "RADAR_ENGINEERING_DATA_OUTPUT")
 			) {
-				const entry = queryElement(".monitor-log-entry", fragment);
+				const entry = queryElement(".monitorLogEntry", fragment);
 				entry.classList.add("radarOutput");
 			}
 			break;
 		}
+		case "ERROR":
+			break;
 		default:
 			assertNever(event);
 	}

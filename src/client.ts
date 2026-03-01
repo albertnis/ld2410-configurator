@@ -37,7 +37,7 @@ export type ClientState = {
 	protocolVersion: number;
 };
 
-export type ConnectionError = BluetoothConnectionError | SerialConnectionError;
+export type ErrorCode = BluetoothConnectionError | SerialConnectionError;
 
 export interface ConnectEvent {
 	type: "CONNECT";
@@ -48,7 +48,17 @@ export interface DisconnectEvent {
 	type: "DISCONNECT";
 }
 
-export type ClientEvent = ConnectEvent | RxEvent | TxEvent | DisconnectEvent;
+export interface ErrorEvent {
+	type: "ERROR";
+	error: ErrorCode;
+}
+
+export type ClientEvent =
+	| ConnectEvent
+	| RxEvent
+	| TxEvent
+	| DisconnectEvent
+	| ErrorEvent;
 
 class Client {
 	private eventSubject = new Subject<ClientEvent>();
@@ -67,6 +77,10 @@ class Client {
 		const serialClient = new SerialCommunicationClient();
 		const result = await serialClient.connect(baudRate);
 		if (!result.success) {
+			this.eventSubject.next({
+				type: "ERROR",
+				error: result.error,
+			});
 			return result;
 		}
 
@@ -86,6 +100,10 @@ class Client {
 		const bluetoothClient = new BluetoothCommunicationClient();
 		const result = await bluetoothClient.connect();
 		if (!result.success) {
+			this.eventSubject.next({
+				type: "ERROR",
+				error: result.error,
+			});
 			return result;
 		}
 		this.registerCommunicationClient(bluetoothClient);

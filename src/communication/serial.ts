@@ -12,8 +12,8 @@ type ReadResult =
 	| { value: undefined; done: true };
 
 export type SerialConnectionError =
-	| "DEVICE_REQUEST_FAILURE"
-	| "PORT_OPEN_FAILURE";
+	| "SERIAL_DEVICE_REQUEST_FAILURE"
+	| "SERIAL_PORT_OPEN_FAILURE";
 
 export class SerialCommunicationClient implements CommunicationClient {
 	private rxSubject = new Subject<Uint8Array>();
@@ -35,7 +35,7 @@ export class SerialCommunicationClient implements CommunicationClient {
 			this.port = await navigator.serial.requestPort();
 		} catch (error) {
 			console.error("Requesting serial device failed", error);
-			return Result.error("DEVICE_REQUEST_FAILURE");
+			return Result.error("SERIAL_DEVICE_REQUEST_FAILURE");
 		}
 
 		console.log(`Opening serial port with baud rate ${baudRate}`);
@@ -43,7 +43,7 @@ export class SerialCommunicationClient implements CommunicationClient {
 			await this.port.open({ baudRate, parity: "none", stopBits: 1 });
 		} catch (error) {
 			console.error("Opening serial port failed", error);
-			return Result.error("PORT_OPEN_FAILURE");
+			return Result.error("SERIAL_PORT_OPEN_FAILURE");
 		}
 
 		this.txSubject.pipe(rateLimit(200)).subscribe({

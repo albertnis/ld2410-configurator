@@ -33,6 +33,8 @@
 	--blur-radius: 16px;
 	--shadow-radius: 16px;
 
+	--snackbar-duration: 5s;
+
 	color: var(--color-fg-1);
 	background-color: var(--color-bg-2);
 }
@@ -601,7 +603,7 @@ body {
 	border-radius: var(--border-radius-md);
 
 	background-color: var(--color-bg-1);
-	max-height: 30vh;
+	max-height: 40vh;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
@@ -616,11 +618,9 @@ body {
 		border-radius 0.1s ease-out;
 
 	@media screen and (max-width: 768px) {
-		& {
-			bottom: 0;
-			margin: 0;
-			border-radius: 0;
-		}
+		bottom: 0;
+		margin: 0;
+		border-radius: 0;
 	}
 
 	&.minimized {
@@ -634,6 +634,87 @@ body {
 
 		#monitor-scrollToBottomButton {
 			display: none;
+		}
+	}
+
+	.monitorHeader {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--spacing-sm);
+		padding: var(--spacing-sm) var(--spacing-md);
+		flex-wrap: wrap;
+
+		.monitorHeader-start,
+		.monitorHeader-end {
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-sm);
+		}
+	}
+
+	.monitor-log {
+		list-style: none;
+		margin: 0;
+		padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md)
+			var(--spacing-md);
+		overflow-y: auto;
+		max-height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-xs);
+		min-height: 25vh;
+
+		&:empty {
+			padding: 0;
+		}
+
+		&.hideRadarOutput .monitorLogEntry.radarOutput {
+			display: none;
+		}
+
+		.monitorLogEntry {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+
+			@media screen and (max-width: 480px) {
+				gap: var(--spacing-sm);
+			}
+
+			.logMetadata {
+				display: flex;
+				align-items: center;
+				gap: var(--spacing-sm);
+				flex-wrap: wrap;
+
+				@media screen and (max-width: 480px) {
+					.chip {
+						font-size: 0.7em;
+					}
+				}
+			}
+
+			time {
+				font-weight: bold;
+				color: var(--color-fg-2);
+			}
+
+			svg {
+				flex-shrink: 0;
+			}
+
+			code {
+				margin-left: var(--spacing-md);
+			}
+
+			&.read svg {
+				color: var(--color-fg-primary);
+			}
+
+			&.write svg {
+				color: var(--color-fg-secondary);
+			}
 		}
 	}
 }
@@ -684,58 +765,6 @@ body {
 			display: none;
 		}
 	}
-}
-
-.monitor-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: var(--spacing-sm);
-	padding: var(--spacing-sm) var(--spacing-md);
-	flex-wrap: wrap;
-}
-
-.monitor-header-start,
-.monitor-header-end {
-	display: flex;
-	align-items: center;
-	gap: var(--spacing-sm);
-}
-
-.monitor-log {
-	list-style: none;
-	margin: 0;
-	padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md)
-		var(--spacing-md);
-	overflow-y: auto;
-	max-height: 100%;
-	display: flex;
-	flex-direction: column;
-	gap: var(--spacing-xs);
-	min-height: 20vh;
-}
-
-.monitor-log:empty {
-	padding: 0;
-}
-
-.monitor-log.hideRadarOutput .monitor-log-entry.radarOutput {
-	display: none;
-}
-
-.monitor-log-entry {
-	display: flex;
-	align-items: center;
-	gap: var(--spacing-md);
-}
-
-.monitor-log-entry time {
-	font-weight: bold;
-	color: var(--color-fg-2);
-}
-
-.monitor-log-entry svg {
-	flex-shrink: 0;
 }
 
 .box {
@@ -842,14 +871,6 @@ input[type="text"] {
 	}
 }
 
-.monitor-log-entry-read svg {
-	color: var(--color-fg-primary);
-}
-
-.monitor-log-entry-write svg {
-	color: var(--color-fg-secondary);
-}
-
 .callout {
 	border-radius: var(--border-radius-sm);
 	padding: var(--spacing-sm);
@@ -863,5 +884,63 @@ input[type="text"] {
 
 	&.info {
 		background-color: var(--color-bg-primary);
+	}
+
+	&.error {
+		background-color: var(--color-bg-error);
+	}
+}
+
+.snackbarRegion {
+	position: fixed;
+	bottom: var(--spacing-md);
+	left: var(--spacing-md);
+	right: var(--spacing-md);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	pointer-events: none;
+
+	@media screen and (max-width: 768px) {
+		justify-content: stretch;
+	}
+}
+
+.snackbar {
+	animation: snackbar-in 0.1s ease-out;
+	opacity: 1;
+	margin: 0 0 var(--spacing-md) 0;
+	transition:
+		display 1s allow-discrete,
+		opacity 1s ease-out;
+	list-style: none;
+	padding: 0;
+	max-width: 500px;
+	box-shadow:
+		0px 0px 0px 1px rgba(255 255 255 / 15%),
+		0px 5px var(--shadow-radius) rgba(0 0 0 / 30%);
+	border-radius: var(--border-radius-sm);
+
+	@media screen and (max-width: 768px) {
+		max-width: none;
+		flex-grow: 1;
+	}
+
+	&.dead {
+		opacity: 0;
+		display: none;
+	}
+}
+
+@keyframes snackbar-in {
+	from {
+		transform: scaleY(0.7);
+		opacity: 0;
+		margin-bottom: 0;
+	}
+	to {
+		transform: scaleY(1);
+		opacity: 1;
+		margin-bottom: var(--spacing-md);
 	}
 }

@@ -764,8 +764,8 @@
 			</div>
 
 			<div class="minimized monitor">
-				<div class="monitor-header">
-					<div class="monitor-header-start">
+				<div class="monitorHeader">
+					<div class="monitorHeader-start">
 						<h2 class="iconHeader">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -806,7 +806,7 @@
 							<span>TX</span>
 						</div>
 					</div>
-					<div class="monitor-header-end">
+					<div class="monitorHeader-end">
 						<label
 							class="iconButton monitor-hideRadarOutputInput"
 							title="Show/hide radar output"
@@ -880,62 +880,90 @@
 			</div>
 		</div>
 
-		<template id="template-monitor-logEntry-rx">
-			<li class="monitor-log-entry monitor-log-entry-read">
-				<time></time>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="feather feather-arrow-down-left"
-				>
-					<line x1="17" y1="7" x2="7" y2="17"></line>
-					<polyline points="17 17 7 17 7 7"></polyline>
-				</svg>
+		<div class="snackbarRegion"></div>
+
+		<template id="template-monitorLogEntry-rx">
+			<li class="read monitorLogEntry">
+				<div class="logMetadata">
+					<time></time>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="feather feather-arrow-down-left"
+					>
+						<line x1="17" y1="7" x2="7" y2="17"></line>
+						<polyline points="17 17 7 17 7 7"></polyline>
+					</svg>
+					<span class="primary chip"></span>
+				</div>
 				<code></code>
-				<span class="primary chip"></span>
 			</li>
 		</template>
-		<template id="template-monitor-logEntry-tx">
-			<li class="monitor-log-entry monitor-log-entry-write">
-				<time></time>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="feather feather-arrow-up-right"
-				>
-					<line x1="7" y1="17" x2="17" y2="7"></line>
-					<polyline points="7 7 17 7 17 17"></polyline>
-				</svg>
+		<template id="template-monitorLogEntry-tx">
+			<li class="write monitorLogEntry">
+				<div class="logMetadata">
+					<time></time>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="feather feather-arrow-up-right"
+					>
+						<line x1="7" y1="17" x2="17" y2="7"></line>
+						<polyline points="7 7 17 7 17 17"></polyline>
+					</svg>
+					<span class="secondary chip"></span>
+				</div>
 				<code></code>
-				<span class="secondary chip"></span>
 			</li>
 		</template>
-		<template id="template-monitor-logEntry-disconnect">
-			<li class="monitor-log-entry">
-				<time></time>
-				<span class="chip chip-error">Disconnect</span>
+		<template id="template-monitorLogEntry-disconnect">
+			<li class="monitorLogEntry">
+				<div class="logMetadata">
+					<time></time>
+					<span class="chip chip-error">Disconnect</span>
+				</div>
 			</li>
 		</template>
-		<template id="template-monitor-logEntry-connect">
-			<li class="monitor-log-entry">
-				<time></time>
-				<span class="chip chip-success">Connect</span>
+		<template id="template-monitorLogEntry-connect">
+			<li class="monitorLogEntry">
+				<div class="logMetadata">
+					<time></time>
+					<span class="chip chip-success">Connect</span>
+				</div>
 			</li>
 		</template>
+		<template id="template-snackbar">
+			<li class="snackbar" role="alert">
+				<div class="error callout">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						class="icon"
+						aria-label="Error:"
+					>
+						<circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="16" x2="12" y2="12"></line>
+						<line x1="12" y1="8" x2="12.01" y2="8"></line>
+					</svg>
+					<span class="snackbarContent"></span>
+				</div>
+			</li>
+		</template>
+
 		<script src="./index.ts" type="module"></script>
 	</body>
 </html>

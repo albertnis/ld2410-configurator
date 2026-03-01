@@ -6,5 +6,8 @@
 	"[yaml]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
 	"[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
 	"[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
-	"[typescript]": { "editor.defaultFormatter": "biomejs.biome" }
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"cSpell.words": ["GATT"]
 }

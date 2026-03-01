@@ -13,11 +13,10 @@ import { rateLimit } from "@/operators/bufferDebounce";
 let currentEventSubject: Subject<CommunicationEvent>;
 
 export type BluetoothConnectionError =
-	| "DEVICE_REQUEST_FAILURE"
-	| "DEVICE_NOT_GATT"
-	| "GATT_CONNECT_FAILURE"
-	| "GATT_SERVICE_FAILURE"
-	| "LOGIN_FAILURE";
+	| "BLUETOOTH_DEVICE_REQUEST_FAILURE"
+	| "BLUETOOTH_DEVICE_NOT_GATT"
+	| "BLUETOOTH_GATT_CONNECT_FAILURE"
+	| "BLUETOOTH_GATT_SERVICE_FAILURE";
 
 interface GattCharacteristics {
 	send: BluetoothRemoteGATTCharacteristic;
@@ -54,13 +53,13 @@ export class BluetoothCommunicationClient implements CommunicationClient {
 			});
 		} catch (error) {
 			console.error("Requesting bluetooth device failed", error);
-			return Result.error("DEVICE_REQUEST_FAILURE");
+			return Result.error("BLUETOOTH_DEVICE_REQUEST_FAILURE");
 		}
 		if (this.device.gatt == null) {
 			console.error(
 				"Requesting bluetooth device failed (device.gatt not defined)",
 			);
-			return Result.error("DEVICE_NOT_GATT");
+			return Result.error("BLUETOOTH_DEVICE_NOT_GATT");
 		}
 
 		console.log("Connecting to GATT");
@@ -69,7 +68,7 @@ export class BluetoothCommunicationClient implements CommunicationClient {
 			server = await this.device.gatt.connect();
 		} catch (error) {
 			console.error("Connecting to GATT failed", error);
-			return Result.error("GATT_CONNECT_FAILURE");
+			return Result.error("BLUETOOTH_GATT_CONNECT_FAILURE");
 		}
 
 		console.log("Retrieving GATT characteristics");
@@ -82,8 +81,7 @@ export class BluetoothCommunicationClient implements CommunicationClient {
 		} catch (error) {
 			console.error("Retrieving GATT characteristics failed", error);
 			await this.disconnect();
-			await this.device.forget();
-			return Result.error("GATT_SERVICE_FAILURE");
+			return Result.error("BLUETOOTH_GATT_SERVICE_FAILURE");
 		}
 
 		currentEventSubject = this.eventSubject;
