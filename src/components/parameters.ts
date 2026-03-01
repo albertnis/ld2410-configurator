@@ -95,5 +95,5 @@ for (const [gateKey, { motion, rest }] of Object.entries(
 	};
 
 	motion.addEventListener("change", handleChange);
-	motion.addEventListener("motion", handleChange);
+	rest.addEventListener("change", handleChange);
 }
