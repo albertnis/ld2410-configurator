@@ -760,6 +760,56 @@
 							</tr>
 						</tbody>
 					</table>
+
+					<form class="numberInputs" id="numberInputs">
+						<div>
+							<label for="timeoutPeriodInput" class="label">
+								Timeout period
+							</label>
+							<input
+								type="number"
+								name="timeoutPeriod"
+								id="timeoutPeriodInput"
+								autocomplete="off"
+								min="0"
+								max="65535"
+								placeholder="0–65535"
+							>
+							<span>s</span>
+						</div>
+
+						<div>
+							<label for="maxMovingDistanceGateInput" class="label">
+								Maximum moving distance gate
+							</label>
+							<input
+								type="number"
+								name="maxMovingDistanceGate"
+								id="maxMovingDistanceGateInput"
+								autocomplete="off"
+								min="2"
+								max="8"
+								placeholder="2–8"
+							>
+						</div>
+
+						<div>
+							<label for="maxStaticDistanceGateInput" class="label">
+								Maximum static distance gate
+							</label>
+							<input
+								type="number"
+								name="maxStaticDistanceGate"
+								id="maxStaticDistanceGateInput"
+								autocomplete="off"
+								min="2"
+								max="8"
+								placeholder="2–8"
+							>
+						</div>
+
+						<button type="submit">Submit</button>
+					</form>
 				</div>
 			</div>
 

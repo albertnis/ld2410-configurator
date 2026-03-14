@@ -1,5 +1,6 @@
 :root {
-	font-family: "San Francisco", Helvetica, Arial, sans-serif;
+	font-family:
+		"IBM Plex Sans", "San Francisco", Helvetica, Arial, system-ui, sans-serif;
 	line-height: 1.5;
 	color-scheme: light dark;
 	box-sizing: border-box;
@@ -392,14 +393,14 @@ body {
 		&.bluetooth {
 			grid-column-start: col-start-2;
 			grid-column-end: col-end-2;
-
-			.inputCluster {
-				display: flex;
-				width: 100%;
-				gap: var(--spacing-sm);
-			}
 		}
 	}
+}
+
+.inputCluster {
+	display: flex;
+	width: 100%;
+	gap: var(--spacing-sm);
 }
 
 .connectedApp {
@@ -591,6 +592,21 @@ body {
 		/* input[type="range"]::before {
       content: attr(value);
     } */
+	}
+
+	.numberInputs {
+		display: flex;
+		gap: var(--spacing-md);
+		flex-direction: column;
+		width: 100%;
+
+		input {
+			width: 160px;
+		}
+
+		button[type="submit"] {
+			display: none;
+		}
 	}
 }
 
@@ -807,7 +823,8 @@ select {
 	flex-grow: 1;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
 	font: inherit;
 	padding: var(--spacing-sm) var(--spacing-sm);
 	border-radius: var(--border-radius-sm);
