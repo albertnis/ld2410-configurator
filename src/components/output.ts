@@ -1,4 +1,4 @@
-import { stateUpdates } from "@/client";
+import { client, stateUpdates } from "@/client";
 import { queryElement } from "@/dom/queryTemplateElement";
 import type { Sensitivity } from "@/ld2410/types";
 import { filter, map } from "rxjs";
@@ -142,5 +142,31 @@ function renderEnergyIndicator(
 		const element = elements.energyIndicators[gate][energyType];
 		element.setAttribute("value", energy[energyType].toString());
 		element.innerHTML = energy[energyType].toString();
+	}
+}
+
+client.events.pipe(filter((x) => x.type === "DISCONNECT")).subscribe(() => {
+	reset();
+});
+
+function reset() {
+	const energyIndicators = elements.energyIndicators.flatMap((d) => [
+		d.motion,
+		d.rest,
+	]);
+
+	for (const energyIndicator of energyIndicators) {
+		energyIndicator.innerHTML = "-";
+		energyIndicator.removeAttribute("value");
+	}
+
+	const distanceIndicators = [
+		elements.detectionDistance,
+		elements.movementTargetDistance,
+		elements.stationaryTargetDistance,
+	];
+	for (const distanceIndicator of distanceIndicators) {
+		queryElement("data", distanceIndicator).removeAttribute("value");
+		queryElement(".value", distanceIndicator).innerHTML = "-";
 	}
 }

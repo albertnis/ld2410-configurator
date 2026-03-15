@@ -56,14 +56,17 @@ stateUpdates
 		}
 	});
 
+client.events.pipe(filter((x) => x.type === "DISCONNECT")).subscribe(() => {
+	reset();
+});
+
 function renderSensitivityInput(
 	gate: keyof Sensitivity,
 	sensitivity: Sensitivity[0],
 ) {
 	for (const energyType of ["motion", "rest"] as const) {
 		const element = elements.sensitivityInputs[gate][energyType];
-		element.setAttribute("value", sensitivity[energyType].toString());
-		// element.value = sensitivity[energyType].toString();
+		element.value = sensitivity[energyType].toString();
 		if (!(gate <= 1 && energyType === "rest")) {
 			element.removeAttribute("disabled");
 		}
@@ -96,4 +99,16 @@ for (const [gateKey, { motion, rest }] of Object.entries(
 
 	motion.addEventListener("change", handleChange);
 	rest.addEventListener("change", handleChange);
+}
+
+function reset() {
+	const sensitivityInputs = elements.sensitivityInputs.flatMap((i) => [
+		i.motion,
+		i.rest,
+	]);
+
+	for (const sensitivityInput of sensitivityInputs) {
+		sensitivityInput.value = "0";
+		sensitivityInput.setAttribute("disabled", "");
+	}
 }

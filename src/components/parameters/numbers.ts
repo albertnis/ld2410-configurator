@@ -13,12 +13,20 @@ const elements = {
 	form: queryElement("#numberInputs") as HTMLFormElement,
 };
 
+elements.maxMovingDistanceGateInput.addEventListener("blur", submitValues);
+elements.maxStaticDistanceGateInput.addEventListener("blur", submitValues);
+elements.timeoutPeriodInput.addEventListener("blur", submitValues);
+elements.form.addEventListener("submit", (event) => {
+	event.preventDefault(), submitValues();
+});
+
 stateUpdates
 	.pipe(
 		map((x) => x.maximumMovingDistanceGate),
 		filter((x) => x != null),
 	)
 	.subscribe((maximumMovingDistanceGate) => {
+		elements.maxMovingDistanceGateInput.removeAttribute("disabled");
 		elements.maxMovingDistanceGateInput.value =
 			maximumMovingDistanceGate.toString();
 	});
@@ -29,6 +37,7 @@ stateUpdates
 		filter((x) => x != null),
 	)
 	.subscribe((maximumStaticDistanceGate) => {
+		elements.maxStaticDistanceGateInput.removeAttribute("disabled");
 		elements.maxStaticDistanceGateInput.value =
 			maximumStaticDistanceGate.toString();
 	});
@@ -39,8 +48,13 @@ stateUpdates
 		filter((x) => x != null),
 	)
 	.subscribe((timeout) => {
+		elements.timeoutPeriodInput.removeAttribute("disabled");
 		elements.timeoutPeriodInput.value = timeout.toString();
 	});
+
+client.events.pipe(filter((x) => x.type === "DISCONNECT")).subscribe(() => {
+	reset();
+});
 
 function submitValues() {
 	if (!elements.form.checkValidity()) {
@@ -68,9 +82,14 @@ function submitValues() {
 	});
 }
 
-elements.maxMovingDistanceGateInput.addEventListener("blur", submitValues);
-elements.maxStaticDistanceGateInput.addEventListener("blur", submitValues);
-elements.timeoutPeriodInput.addEventListener("blur", submitValues);
-elements.form.addEventListener("submit", (event) => {
-	event.preventDefault(), submitValues();
-});
+function reset() {
+	const inputs = [
+		elements.maxMovingDistanceGateInput,
+		elements.maxStaticDistanceGateInput,
+		elements.timeoutPeriodInput,
+	];
+
+	for (const input of inputs) {
+		input.setAttribute("disabled", "");
+	}
+}
